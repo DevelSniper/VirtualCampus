@@ -52,8 +52,8 @@ if(expression){
 
 * SQL语句关键字全部使用大写
 
-```
-SELECT * FROM Table1 WHERE State = 'WA'；
+```sql
+SELECT * FROM Table1 WHERE State = 'WA';
 ```
 
 ### 注释规范
@@ -89,3 +89,37 @@ public void test(){
 }
 ```
 具体参照 [javadoc](http://en.wikipedia.org/wiki/Javadoc)
+
+===
+
+.gitignore 里为不需要同步至 repo 的配置文件，可以自己手动添加不想同步的文件。
+
+===
+
+server 端数据库目前使用 mysql 如需使用需要自己添加依赖包
+
+数据表名为 `holyshit`
+
+数据库登陆用户名为 `root`
+
+数据库登陆密码为 `123212321`
+
+```sql
+CREATE  TABLE `holyshit`.`user` (
+
+  `sID` INT NOT NULL ,
+
+  `password` VARCHAR(45) NOT NULL ,
+
+  `type` INT NOT NULL COMMENT 'USER_TYPE:1:STUDENT;2:TEACHER;3:OTHER' ,
+
+  `name` VARCHAR(45) NOT NULL ,
+
+  PRIMARY KEY (`sID`) ,
+
+  UNIQUE INDEX `sID_UNIQUE` (`sID` ASC) )
+
+DEFAULT CHARACTER SET = utf8;
+```
+
+测试数据需自己添加
