@@ -74,4 +74,8 @@ public class Message implements Serializable {
 		Client.clientID = cID;
 	}
 
+	public void setVars(String[] vars) {
+		this.vars = vars;
+	}
+
 }

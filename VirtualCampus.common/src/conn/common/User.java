@@ -76,5 +76,21 @@ public class User implements Serializable {
 		this.isLogin = isLogin;
 	}
 
+	public String getIdAsString(){
+		return String.valueOf(this.sID);
+	}
+	
+	public String getTypeAsString(){
+		if(this.type == UserType.Admin)
+			return "管理员";
+		else if(this.type == UserType.Other)
+			return "其他";
+		else if(this.type == UserType.Student)
+			return "学生";
+		else if(this.type == UserType.Teacher)
+			return "教师";
+		else
+			return "UNKNOWN!";
+	}
 
 }
