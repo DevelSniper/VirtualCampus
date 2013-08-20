@@ -42,12 +42,11 @@ public class ClientLoginWindow {
 		frame.setBounds(100, 100, 400, 550);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(frame.getOwner());
-		JPanel jp = new JPanel();
-
-		jp.setOpaque(false);
-		frame.getContentPane().add(jp);
 		
 		//背景
+		JPanel jp = new JPanel();
+		jp.setOpaque(false);
+		frame.getContentPane().add(jp);
 		((JPanel) frame.getContentPane()).setOpaque(false);
 		ImageIcon img = new ImageIcon(getClass().getResource("/res/background.png"));
 		JLabel background = new JLabel(img);
