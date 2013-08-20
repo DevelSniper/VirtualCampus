@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -12,7 +13,6 @@ import javax.swing.JButton;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -90,8 +90,27 @@ public class ClientLoginWindow {
 		btnLogin.setBounds(80, 350, 112, 40);
 
 		btnLogin.addMouseListener(new MouseAdapter() {
-			//add
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				String loginID = textUserID.getText();
+				String password = String.valueOf(passwordField.getPassword());
+				if (loginID.isEmpty() || password.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "用户名/密码不能为空！", "错误",
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				if(loginID == "213110561" && password == "123212321"){
+					JOptionPane.showMessageDialog(null, "登陆成功", "-v-",
+							JOptionPane.INFORMATION_MESSAGE);
+					return;
+				}else{
+					JOptionPane.showMessageDialog(null, "用户名"+loginID+"密码错误"+password, "Sorry",
+							JOptionPane.INFORMATION_MESSAGE);
+					return;
+				}
+			}
 		});
+		
 		jp.add(btnLogin);
 
 		JButton btnReset = new JButton("");
