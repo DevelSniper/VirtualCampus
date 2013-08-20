@@ -2,17 +2,17 @@ package client.ui;
 
 import java.awt.EventQueue;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.SwingConstants;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -36,27 +36,31 @@ public class ClientLoginWindow {
 	}
 
 	public ClientLoginWindow() {
-		initialize();
-	}
-
-	protected void initialize() {
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setTitle("Easy SEU Virtual Campus");
-		frame.setBounds(100, 100, 600, 300);
+		frame.setBounds(100, 100, 400, 550);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(frame.getOwner());
 		JPanel jp = new JPanel();
 
 		jp.setOpaque(false);
 		frame.getContentPane().add(jp);
-		setBackground();
+		
+		//背景
+		((JPanel) frame.getContentPane()).setOpaque(false);
+		ImageIcon img = new ImageIcon(getClass().getResource("/res/background.png"));
+		JLabel background = new JLabel(img);
+		frame.getLayeredPane().add(background, new Integer(Integer.MIN_VALUE));
+		background.setBounds(0, 0, img.getIconWidth(), img.getIconHeight());
+		
 		jp.setLayout(null);
-		JLabel lblUserID = new JLabel("一卡通号/UserID:");
-		lblUserID.setBounds(23, 145, 96, 17);
-		lblUserID.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUserID.setVisible(true);
-		jp.add(lblUserID);
+//		直接画在背景上
+//		JLabel lblUserID = new JLabel("一卡通号/UserID:");
+//		lblUserID.setBounds(23, 145, 96, 17);
+//		lblUserID.setHorizontalAlignment(SwingConstants.CENTER);
+//		lblUserID.setVisible(true);
+//		jp.add(lblUserID);
 		textUserID = new JTextField();
 		textUserID.addKeyListener(new KeyAdapter() {
 			@Override
@@ -67,30 +71,36 @@ public class ClientLoginWindow {
 
 
 		});
-		textUserID.setBounds(151, 146, 276, 40);
+		textUserID.setBounds(80, 205, 220, 30);
 		jp.add(textUserID);
 		textUserID.setColumns(10);
-		JLabel lblPassword = new JLabel("密码/Password:");
-		lblPassword.setBounds(35, 196, 84, 15);
-		jp.add(lblPassword);
-		lblPassword.setVisible(true);
+//		直接画在背景上
+//		JLabel lblPassword = new JLabel("密码/Password:");
+//		lblPassword.setBounds(35, 196, 84, 15);
+//		jp.add(lblPassword);
+//		lblPassword.setVisible(true);
 		passwordField = new JPasswordField();
-		passwordField.setBounds(151, 212, 276, 40);
+		passwordField.setBounds(80, 290, 220, 30);
 		jp.add(passwordField);
 
-		JButton btnLogin = new JButton("登陆");
-		btnLogin.setBorderPainted(true);
-
-		btnLogin.setBounds(443, 146, 112, 40);
+		JButton btnLogin = new JButton(""); //用图片替换
+		btnLogin.setBorderPainted(false);	
+		btnLogin.setIcon(new ImageIcon(getClass().getResource("/res/login.png")));
+		btnLogin.setPressedIcon(new ImageIcon(
+				"src/res/login1.png"));
+		btnLogin.setBounds(80, 350, 112, 40);
 
 		btnLogin.addMouseListener(new MouseAdapter() {
-
+			//add
 		});
 		jp.add(btnLogin);
 
-		JButton btnReset = new JButton("重置");
-		btnReset.setBorderPainted(true);
-		btnReset.setBounds(443, 212, 112, 40);
+		JButton btnReset = new JButton("");
+		btnReset.setIcon(new ImageIcon(getClass().getResource("/res/reset.png")));
+		btnReset.setPressedIcon(new ImageIcon(
+				"src/res/reset1.png"));
+		btnReset.setBorderPainted(false);
+		btnReset.setBounds(190, 350, 112, 40);
 		btnReset.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -104,16 +114,13 @@ public class ClientLoginWindow {
 		frame.setVisible(true);
 	}
 
-	private void setBackground() {
-		((JPanel) frame.getContentPane()).setOpaque(true);
-	}
-
 	public static ClientLoginWindow getWindow() {
 		return window;
 	}
 
 	public static void setWindow(ClientLoginWindow window) {
 		ClientLoginWindow.window = window;
+		
 	}
 
 }
