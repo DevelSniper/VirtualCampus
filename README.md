@@ -63,7 +63,11 @@ public xxxWindow (User userIn){
 |	vcCourse			|
 |	vcStudentCourse			|
 
-其中只有 **vcUser** 表中有测试数据：
+目前数据库结构：
+
+![sqleer](https://github.com/xindervella/VirtualCampus/diff_blob/0146ffd2589c7ea6e4bd67bba052d329ffbff36a/SQL/SQL%20EER.png?raw=true)
+
+目前只有 **vcUser** 表中有测试数据：
 
 |    uID    |  uPwd   |  uRole  |
 | --------- | ------- | ------- |
