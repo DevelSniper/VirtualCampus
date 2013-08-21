@@ -1,6 +1,50 @@
 Virtual Campus
 ===
 
+###数据库相关
+
+数据库目前使用 mysql
+
+> **Hostname:  121.248.63.106**
+
+> **username:  xindervella**
+
+> **password:  hu@idi@nn@0**
+
+> **schemas:  xindervella_VirtualCampus**
+
+<br />
+
+目前 **xindervella_VirtualCampus** 的数据表：
+
+|Tables\_in\_xindervella\_VirtualCampus	|
+|---------------------------------------|
+|	vcUser				|
+|	vcStudent			|
+|	vcTeacher			|
+|	vcClass				|
+|	vcCourse			|
+|	vcStudentCourse			|
+
+其中只有 **vcUser** 表中有测试数据：
+
+|    uID    |  uPwd   |  uRole  |
+| --------- | ------- | ------- |
+| 213110561 | 1234567 |  admin  |
+| 213110562 | 3456789 | student |
+| 213110563 | 4567890 | teacher |
+
+测试数据可以自己添加
+
+
+
+<br />
+
+[VirtualCampus.operateDbSample](https://github.com/xindervella/VirtualCampus/tree/master/VirtualCampus.operateDbSample) 为数据库操作样例
+
+[常用 sql 语句](http://www.cnblogs.com/yubinfeng/archive/2010/11/02/1867386.html)
+
+===
 
 ### git 使用方法
 
@@ -179,32 +223,3 @@ public void test(){
 ```
 具体参照 [javadoc](http://en.wikipedia.org/wiki/Javadoc)
 
-===
-
-server 端数据库目前使用 mysql 如需使用需要自己添加依赖包
-
-数据表名为 `holyshit`
-
-数据库登陆用户名为 `root`
-
-数据库登陆密码为 `123212321`
-
-```sql
-CREATE  TABLE `holyshit`.`user` (
-
-  `sID` INT NOT NULL ,
-
-  `password` VARCHAR(45) NOT NULL ,
-
-  `type` INT NOT NULL COMMENT 'USER_TYPE:1:STUDENT;2:TEACHER;3:OTHER' ,
-
-  `name` VARCHAR(45) NOT NULL ,
-
-  PRIMARY KEY (`sID`) ,
-
-  UNIQUE INDEX `sID_UNIQUE` (`sID` ASC) )
-
-DEFAULT CHARACTER SET = utf8;
-```
-
-测试数据需自己添加
