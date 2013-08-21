@@ -10,7 +10,6 @@ import javax.swing.JTextField;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyAdapter;
@@ -27,7 +26,7 @@ public class ClientLoginWindow {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					setWindow(new ClientLoginWindow());
+					window = new ClientLoginWindow();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -52,7 +51,7 @@ public class ClientLoginWindow {
 		JLabel background = new JLabel(img);
 		frame.getLayeredPane().add(background, new Integer(Integer.MIN_VALUE));
 		background.setBounds(0, 0, img.getIconWidth(), img.getIconHeight());
-		
+//		
 		jp.setLayout(null);
 //		直接画在背景上
 //		JLabel lblUserID = new JLabel("一卡通号/UserID:");
@@ -81,7 +80,7 @@ public class ClientLoginWindow {
 		passwordField = new JPasswordField();
 		passwordField.setBounds(80, 290, 220, 30);
 		jp.add(passwordField);
-
+//
 		JButton btnLogin = new JButton(""); //用图片替换
 		btnLogin.setBorderPainted(false);	
 		btnLogin.setIcon(new ImageIcon(getClass().getResource("/res/login.png")));
@@ -92,27 +91,15 @@ public class ClientLoginWindow {
 		btnLogin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				String loginID = textUserID.getText();
-				String password = String.valueOf(passwordField.getPassword());
-				if (loginID.isEmpty() || password.isEmpty()) {
-					JOptionPane.showMessageDialog(null, "用户名/密码不能为空！", "错误",
-							JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				if(loginID == "213110561" && password == "123212321"){
-					JOptionPane.showMessageDialog(null, "登陆成功", "-v-",
-							JOptionPane.INFORMATION_MESSAGE);
-					return;
-				}else{
-					JOptionPane.showMessageDialog(null, "用户名"+loginID+"密码错误"+password, "Sorry",
-							JOptionPane.INFORMATION_MESSAGE);
-					return;
-				}
+//				String loginID = textUserID.getText();
+//				String password = String.valueOf(passwordField.getPassword());
+				ClientMenuWindow cmw = new ClientMenuWindow(window);
+				cmw.setVisible(true);
 			}
 		});
-		
+//		
 		jp.add(btnLogin);
-
+//
 		JButton btnReset = new JButton("");
 		btnReset.setIcon(new ImageIcon(getClass().getResource("/res/reset.png")));
 		btnReset.setPressedIcon(new ImageIcon(
@@ -128,7 +115,7 @@ public class ClientLoginWindow {
 		});
 
 		jp.add(btnReset);
-
+//
 		frame.setVisible(true);
 	}
 
