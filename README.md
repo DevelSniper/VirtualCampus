@@ -7,6 +7,8 @@ Virtual Campus
 
 > **Hostname:  121.248.63.106**
 
+> **Port: 3306**
+
 > **username:  xindervella**
 
 > **password:  hu@idi@nn@0**
