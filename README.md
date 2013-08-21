@@ -40,7 +40,7 @@ public xxxWindow (User userIn){
 
 ###数据库相关
 
-数据库目前使用 mysql
+数据库目前使用 mysql 只能通过内网访问
 
 > **Hostname:  121.248.63.106**
 
