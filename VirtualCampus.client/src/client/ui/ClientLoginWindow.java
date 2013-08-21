@@ -1,5 +1,6 @@
 package client.ui;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.ImageIcon;
@@ -10,6 +11,7 @@ import javax.swing.JTextField;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyAdapter;

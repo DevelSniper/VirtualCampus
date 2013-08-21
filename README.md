@@ -1,6 +1,43 @@
 Virtual Campus
 ===
 
+### 8.23日前完成各自负责模块 UI DEMO
+
+注意是个人负责模块的所有界面，包括相关按钮的弹出效果等等，业务逻辑可以先不考虑。
+
+在所有模块合并时会将当前登录用户身份作为参数传递，共有三种身份 学生、教师、管理员，设计界面时需要全部考虑
+
+如果三种身份所见页面相差较大可以将三个界面分开写，合并时我会再前一层判断然后按照不同身份调用不同窗口。
+
+如果三种身份所见界面相差不大或公共代码较多可以使用:
+
+```java
+public xxxWindow (User userIn){
+
+	// public ui code block
+
+	if ( userIn.isStudent() ){
+
+		// student ui code block
+
+	} else if ( userIn.isTeacher() ) {
+
+		// teacher ui code block
+
+	} else if ( userIn.isAdmin() ){
+
+		// admin ui code block
+
+	}
+
+}
+
+```
+
+
+
+===
+
 ###数据库相关
 
 数据库目前使用 mysql
@@ -14,8 +51,6 @@ Virtual Campus
 > **password:  hu@idi@nn@0**
 
 > **schemas:  xindervella_VirtualCampus**
-
-<br />
 
 目前 **xindervella_VirtualCampus** 的数据表：
 
