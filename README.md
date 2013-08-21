@@ -42,7 +42,7 @@ Virtual Campus
 
 数据库操作样例：[VirtualCampus.operateDbSample](https://github.com/xindervella/VirtualCampus/tree/master/VirtualCampus.operateDbSample)
 
-如需在 eclipse 中操作数据库需要在相关项目 `Build Path` → `Add Library` → 'User Library' 中 添加相关 jar 包
+如需在 eclipse 中操作数据库需要在相关项目 `Build Path` → `Add Library` → `User Library` 中 添加相关 jar 包
 
 项目中使用 [mysql-connector-java-5.1.26-bin.jar](https://github.com/xindervella/VirtualCampus/tree/master/VirtualCampus.operateDbSample/mysql-connector-java-5.1.26)
 
