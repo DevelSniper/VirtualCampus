@@ -1,5 +1,9 @@
 package client.connDb;
 
-public class ClientSrvInterface {
+import conn.common.Message;
+
+public interface ClientSrvInterface extends Runnable{
+	public void send(Message msg);
+	public Message receive();
 
 }

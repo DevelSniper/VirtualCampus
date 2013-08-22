@@ -38,5 +38,11 @@ public class ClientMenuWindow extends JFrame{
 		clw.frame.setVisible(false);
 		
 	}
+	public JPanel getContentPanel() {
+		return contentPanel;
+	}
+	public void setContentPanel(JPanel contentPanel) {
+		this.contentPanel = contentPanel;
+	}
 
 }
