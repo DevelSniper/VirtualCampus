@@ -5,7 +5,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 
+import conn.common.Student;
 import conn.common.User;
 
 public class OperateDB {
@@ -18,7 +20,7 @@ public class OperateDB {
 	
 	public boolean longin(User user) throws SQLException{
 		String sqlLogin;
-		int uID = user.getuID();
+		int uID = Integer.parseInt(user.getuID());
 		String uPwd = user.getuPassword();
 		
 		try {
@@ -47,10 +49,117 @@ public class OperateDB {
 			
 		} catch (Exception e){
 			e.printStackTrace();
+			return false;
 		} finally {
 			conn.close();
 		}
 		return false;
 	}
 
+	public boolean createUser(int username, String pwd, String role) throws SQLException {
+		String sqlCreateUser;
+		int uID = username;
+		String uPwd = pwd;
+		String uRole = role;
+		try {
+			Class.forName(DRIVER_NAME);
+			conn = DriverManager.getConnection(CONN_URL, USER_NAME, PASSWORD);
+			
+			Statement stmt = conn.createStatement();
+			sqlCreateUser = String.format("INSERT INTO `xindervella_VirtualCampus`.`vcUser` (`uID`, `uPwd`, `uRole`) VALUES ('%s', '%s', '%s')", uID, uPwd, uRole);
+			stmt.executeUpdate(sqlCreateUser);
+			return true;
+			
+		}catch (SQLException e){
+			e.printStackTrace();
+			return false;
+		} catch (Exception e){
+			e.printStackTrace();
+			return false;
+		} finally {
+			conn.close();
+		}
+	}
+
+	public Vector<User> queryUser() throws SQLException {
+		Vector<User> users = new Vector<User>();
+		String sqlQueryUser;
+		
+		try {
+			Class.forName(DRIVER_NAME);
+			conn = DriverManager.getConnection(CONN_URL, USER_NAME, PASSWORD);
+			
+			Statement stmt = conn.createStatement();
+			sqlQueryUser = "SELECT * FROM vcUser"; 
+			ResultSet rsQueryUser = stmt.executeQuery(sqlQueryUser);
+			
+			while(rsQueryUser.next()){
+				users.add(new User(rsQueryUser.getString("uID"), rsQueryUser.getString("uPwd"), rsQueryUser.getString("uRole")));
+			}
+			
+		} catch (Exception e){
+			e.printStackTrace();
+		} finally {
+			conn.close();
+		}	
+		
+		return users;
+	}
+
+	public boolean updatePwd(int username, String pwd) throws SQLException {
+		String sqlUpdatePwd;
+		int uID = username;
+		String uPwd = pwd;
+		try {
+			Class.forName(DRIVER_NAME);
+			conn = DriverManager.getConnection(CONN_URL, USER_NAME, PASSWORD);
+			
+			Statement stmt = conn.createStatement();
+			sqlUpdatePwd = String.format("UPDATE `xindervella_VirtualCampus`.`vcUser` SET `uPwd`='%s' WHERE `uID`='%s'", uPwd, uID);
+			stmt.executeUpdate(sqlUpdatePwd);
+			return true;
+			
+		}catch (SQLException e){
+			e.printStackTrace();
+			return false;
+		} catch (Exception e){
+			e.printStackTrace();
+			return false;
+		} finally {
+			conn.close();
+		}
+	}
+
+	public Student queryStudent(int username) throws SQLException {
+		Student stu = new Student();
+		String sqlQueryStu;
+		
+		try {
+			Class.forName(DRIVER_NAME);
+			conn = DriverManager.getConnection(CONN_URL, USER_NAME, PASSWORD);
+			
+			Statement stmt = conn.createStatement();
+			sqlQueryStu = String.format("SELECT * FROM vcUser INNER JOIN vcStudent ON uID=sCard and uID='%s'",username); 
+			ResultSet rsQueryStu = stmt.executeQuery(sqlQueryStu);
+			
+			if(rsQueryStu.first()){
+				stu.setUserCard(String.valueOf(username));
+				stu.setUserRole(rsQueryStu.getString("uRole"));
+				stu.setUserID(rsQueryStu.getString("sID"));
+				stu.setUserName(rsQueryStu.getString("sName"));
+				stu.setUserSex(rsQueryStu.getString("sSex"));
+				stu.setUserClass(rsQueryStu.getString("sClassID"));
+				stu.setUserBirthday(rsQueryStu.getString("sBirthday"));
+				stu.setUserHometown(rsQueryStu.getString("sHometown"));
+			}
+			
+		} catch (Exception e){
+			e.printStackTrace();
+		} finally {
+			conn.close();
+		}	
+		
+		return stu;
+	}
+	
 }
