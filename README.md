@@ -96,7 +96,8 @@ public xxxWindow (User userIn){
 
 ```sql
 -- -----------------------------------------------------
---如需获得 学生相关信息 并通过 vcStudent 表中 sClassID 获得相关班级信息 sql 语句可以写为：
+-- 如需获得 学生相关信息 
+-- 并通过 vcStudent 表中 sClassID 获得相关班级信息 sql 语句可以写为：
 -- -----------------------------------------------------
 SELECT * FROM vcStudent INNER JOIN vcClass ON sClassID=cClassID;
 
