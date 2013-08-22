@@ -49,6 +49,7 @@ public class ClientSrv implements ClientSrvInterface {
 			ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
 			System.out.println("CSrv: Receive a msg.");
 			Message msgRcv = (Message)ois.readObject();
+
 			return msgRcv;
 		}catch(Exception e){
 			e.printStackTrace();

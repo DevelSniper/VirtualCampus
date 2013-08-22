@@ -14,7 +14,9 @@ public class Message implements Serializable {
 
 	protected String username;
 	protected String password;
+	protected String role;
 	protected Object data;
+	protected boolean isSuccess;
 	
 	public String getType() {
 		return type;
@@ -39,6 +41,18 @@ public class Message implements Serializable {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
+	public boolean isSuccess() {
+		return isSuccess;
+	}
+	public void setSuccess(boolean isSuccess) {
+		this.isSuccess = isSuccess;
 	}
 	public Object getData() {
 		return data;

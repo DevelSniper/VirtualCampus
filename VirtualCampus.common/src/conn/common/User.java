@@ -9,35 +9,35 @@ import java.io.Serializable;
 public class User implements Serializable {
 
 	protected static final long serialVersionUID = 5577101422194718856L;
-	protected int uID;
+	protected String uID;
 	protected String uPassword;
 	protected String uRole;
 	protected boolean isLogin = false;
 	
 
-	public User(int uID, String uPassword, String uRole) {
+	public User(String uID, String uPassword, String uRole) {
 		super();
 		this.uID = uID;
 		this.uPassword = uPassword;
 		this.uRole = uRole;
 	}
 
-	public User(int uID, String uPassword) {
+	public User(String uID, String uPassword) {
 		super();
 		this.uID = uID;
 		this.uPassword = uPassword;
 	}
 
-	public User(int uID) {
+	public User(String uID) {
 		super();
 		this.uID = uID;
 	}
 
-	public int getuID() {
+	public String getuID() {
 		return uID;
 	}
 
-	public void setuID(int uID) {
+	public void setuID(String uID) {
 		this.uID = uID;
 	}
 
@@ -58,21 +58,12 @@ public class User implements Serializable {
 	}
 
 
-	public int getsID() {
-		return uID;
-	}
-
-
 	public boolean isLogin() {
 		return isLogin;
 	}
 
 	public void setLogin(boolean isLogin) {
 		this.isLogin = isLogin;
-	}
-
-	public String getIdAsString(){
-		return String.valueOf(this.uID);
 	}
 
 }

@@ -100,10 +100,14 @@ public class ClientLoginWindow {
 				if (userInMsg == null){
 					JOptionPane.showMessageDialog(null, "用户名/密码错误！", "错误",JOptionPane.ERROR_MESSAGE);
 				} else {
-					ClientMenuWindow cmw = new ClientMenuWindow(window);
+					ClientMenuWindow cmw = new ClientMenuWindow(window, userInMsg);
 					cmw.setVisible(true);
 				}
 				cmh.disconnect();
+//				User user = new User("213110561", "123456", "student");
+//				ClientMenuWindow cmw = new ClientMenuWindow(window, user);
+//				cmw.setVisible(true);
+//				
 			}
 		});
 		jp.add(btnLogin);
