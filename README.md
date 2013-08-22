@@ -73,11 +73,8 @@ public xxxWindow (User userIn){
 |	vcCourse			|
 |	vcStudentCourse			|
 
-目前数据库结构：
 
-![sqleer](https://github.com/xindervella/VirtualCampus/diff_blob/0146ffd2589c7ea6e4bd67bba052d329ffbff36a/SQL/SQL%20EER.png?raw=true)
-
-目前只有 **vcUser** 表中有测试数据：
+**vcUser** 表中测试数据：
 
 |    uID    |  uPwd   |  uRole  |
 | --------- | ------- | ------- |
@@ -85,9 +82,33 @@ public xxxWindow (User userIn){
 | 213110562 | 3456789 | student |
 | 213110563 | 4567890 | teacher |
 
+**vcStudent** 表中测试数据 (部分）：
+
+|   sCard   |   ...   |   ...   |   ...   |   ...   |   ...   |  sClassID  |
+| --------- | ------- | ------- | ------- | ------- | ------- | ---------- |
+| 213110561 |   ...   |   ...   |   ...   |   ...   |   ...   |   090111   |
+
+**vcClass** 表中测试数据 （部分）：
+
+|  cClassID |   ...   |   ...   |   ...   |   ...   |   ...   |   cMajor   |
+| --------- | ------- | ------- | ------- | ------- | ------- | ---------- |
+|   090111  |   ...   |   ...   |   ...   |   ...   |   ...   |     CSE    |
+
+```sql
+-- -----------------------------------------------------
+--如需获得 学生相关信息 并通过 vcStudent 表中 sClassID 获得相关班级信息 sql 语句可以写为：
+-- -----------------------------------------------------
+SELECT * FROM vcStudent INNER JOIN vcClass ON sClassID=cClassID;
+
+-- -----------------------------------------------------
+-- 如果需要同时限制班级ID 可以使用 AND 关键字:
+-- -----------------------------------------------------
+SELECT * FROM vcStudent INNER JOIN vcClass ON sClassID=cClassID AND sClassID='090111';
+```
+
+常用 [sql 语句](http://www.cnblogs.com/yubinfeng/archive/2010/11/02/1867386.html)
+
 测试数据可以自己添加
-
-
 
 <br />
 
@@ -97,8 +118,6 @@ public xxxWindow (User userIn){
 
 项目中使用 [mysql-connector-java-5.1.26-bin.jar](https://github.com/xindervella/VirtualCampus/tree/master/VirtualCampus.operateDbSample/mysql-connector-java-5.1.26)
 
-
-常用 [sql 语句](http://www.cnblogs.com/yubinfeng/archive/2010/11/02/1867386.html)
 
 ===
 
