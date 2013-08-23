@@ -165,7 +165,7 @@ public class ClientProfileWindow extends JFrame{
 					JOptionPane.showMessageDialog(null, "两次密码不相同！", "错误", JOptionPane.ERROR_MESSAGE);
 				}else{
 					ClientMsgHelper cmh = new ClientMsgHelper();
-					cmh.updatePwd(user.getuID(), password);
+					cmh.update("vcUser","uID",user.getuID() , "uPwd",  password);
 					cmh.sendMsg();
 					cmh.recieveMsg();
 					boolean cStatus = cmh.getMsg().isSuccess();

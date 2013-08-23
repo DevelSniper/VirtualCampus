@@ -70,18 +70,21 @@ public class ClientMenuWindow extends JFrame{
 		lbUserRole.setVisible(true);
 		jp.add(lbUserRole);
 		
+		
+		//Menu
+		
 		if (user.getuRole().equals("admin")){		
-			JButton btnCreate = new JButton("Create");
-			btnCreate.setBorderPainted(true);
-			btnCreate.setBounds(650, 350, 100, 30);
-			btnCreate.addMouseListener(new MouseAdapter() {
+			JButton btnUserMng = new JButton("User Manage");
+			btnUserMng.setBorderPainted(true);
+			btnUserMng.setBounds(650, 350, 100, 30);
+			btnUserMng.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
-					ClientCreateUserWindow ccuw = new ClientCreateUserWindow();
+					ClientUserManageWindow ccuw = new ClientUserManageWindow();
 					ccuw.setVisible(true);
 				}
 			});
-			jp.add(btnCreate);
+			jp.add(btnUserMng);
 		}
 		JButton btnProfile = new JButton("Profile");
 		btnProfile.setBorderPainted(true);

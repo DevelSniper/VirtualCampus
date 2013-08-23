@@ -19,10 +19,10 @@ import javax.swing.SwingConstants;
 import client.connDb.ClientMsgHelper;
 import conn.common.User;
 
-public class ClientCreateUserWindow extends JFrame{
+public class ClientUserManageWindow extends JFrame{
 	
 	private static final long serialVersionUID = -2552182133838952543L;
-	public ClientCreateUserWindow(){
+	public ClientUserManageWindow(){
 	
 		setResizable(false);
 		setTitle("Create new user");
@@ -30,7 +30,7 @@ public class ClientCreateUserWindow extends JFrame{
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setLocationRelativeTo(getOwner());
 		
-		JPanel createPanel = new JPanel();
+		final JPanel createPanel = new JPanel();
 		createPanel.setOpaque(false);
 		getContentPane().add(createPanel);
 		((JPanel) getContentPane()).setOpaque(false);
@@ -58,14 +58,13 @@ public class ClientCreateUserWindow extends JFrame{
 			data.add((Vector<String>) user.clone());
 			user.removeAllElements();
 		}
-		final JTable table = new JTable(data, tableHead);
-		final JScrollPane scrollpane = new JScrollPane(table);
+		final JTable tbUser = new JTable(data, tableHead);
+		final JScrollPane scrollpane = new JScrollPane(tbUser);
 		scrollpane.setBounds(30, 60, 170, 150);
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		scrollpane.setViewportView(table);
-		scrollpane.setRowHeaderView(table.getTableHeader());
-		createPanel.add(scrollpane);	
-		
+		tbUser.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		scrollpane.setViewportView(tbUser);
+		scrollpane.setRowHeaderView(tbUser.getTableHeader());
+
 		JLabel lbcUsername = new JLabel("Username");
 		lbcUsername.setBounds(250, 60, 80, 20);
 		lbcUsername.setHorizontalAlignment(SwingConstants.LEFT);
@@ -127,7 +126,6 @@ public class ClientCreateUserWindow extends JFrame{
 						user.add(role);
 						data.add(0, (Vector<String>) user.clone());
 						user.removeAllElements();
-						table.updateUI();
 					}else {
 						JOptionPane.showMessageDialog(null, "不成功！", "错误", JOptionPane.ERROR_MESSAGE);
 					}
@@ -135,7 +133,56 @@ public class ClientCreateUserWindow extends JFrame{
 				
 			}
 		});
+		
+		JButton btnUpdateRole = new JButton("Authorize");
+		btnUpdateRole.setBorderPainted(true);
+		btnUpdateRole.setBounds(570, 140, 150, 30);
+		btnUpdateRole.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				String username = usernameField.getText();
+				String role = (String) cbcRole.getSelectedItem();
+				int rowCount = tbUser.getRowCount();
+				for(int i=0; i<rowCount; i++){
+					if(tbUser.getValueAt(i, 0).equals(username)){
+						tbUser.setValueAt(role, i, 1);
+						break;
+					}
+				}
+				tbUser.updateUI();
+				ClientMsgHelper cmh = new ClientMsgHelper();
+				cmh.update("vcUser","uID",username , "uRole",  role);
+				cmh.sendMsg();
+				cmh.recieveMsg();
+				boolean cStatus = cmh.getMsg().isSuccess();
+				if(cStatus){
+					JOptionPane.showMessageDialog(null, "成功！", "信息", JOptionPane.INFORMATION_MESSAGE);
+				}else {
+					JOptionPane.showMessageDialog(null, "不成功！", "错误", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		
+		tbUser.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				int rowIndex = tbUser.getSelectedRow();
+				String username =(String) tbUser.getValueAt(rowIndex, 0);
+				String role = (String) tbUser.getValueAt(rowIndex, 1);
+				if (role.equals("student")){cbcRole.setSelectedIndex(0);}
+				else if (role.equals("teacher")){cbcRole.setSelectedIndex(1);}
+				else if (role.equals("admin")){cbcRole.setSelectedIndex(2);}
+				usernameField.setText(username);
+				
+			}
+		});
+		
+	
+		
+		createPanel.add(scrollpane);	
 		createPanel.add(btncCreate);
+		createPanel.add(btnUpdateRole);
+		
 	}
 
 }

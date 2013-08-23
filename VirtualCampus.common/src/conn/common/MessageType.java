@@ -9,7 +9,7 @@ public interface MessageType {
 	String C_REQ_LOGIN 		= "C_REQ_LOGIN"; //传递登陆信息
 	String C_REQ_CREATE 	= "C_REQ_CREATE";
 	String C_REQ_QUERYUSER	= "C_REQ_QUERYUSER";
-	String C_REQ_UPDATEPWD 	= "C_REQ_UPDATEPWD";
+	String C_REQ_UPDATE 	= "C_REQ_UPDATE";
 	String C_REQ_QUERYSTU	= "C_REQ_QUERYSTU";
 
 	//SERVER

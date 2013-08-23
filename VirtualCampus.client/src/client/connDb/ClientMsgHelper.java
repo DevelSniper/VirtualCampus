@@ -76,7 +76,7 @@ public class ClientMsgHelper {
 	public void updatePwd(String username, String password) {
 		// 修改用户密码
 		clearMsg();
-		this.msg.setType(MessageType.C_REQ_UPDATEPWD);
+		this.msg.setType(MessageType.C_REQ_UPDATE);
 		this.msg.setUsername(username);
 		this.msg.setPassword(password);
 		
@@ -87,6 +87,26 @@ public class ClientMsgHelper {
 		clearMsg();
 		this.msg.setType(MessageType.C_REQ_QUERYSTU);
 		this.msg.setUsername(username);
+		
+	}
+
+	/**
+	 * 执行Update相关操作
+	 * @param table 需更新数据表
+	 * @param cdColum 条件列
+	 * @param cdData 条件
+	 * @param cgColum 需更改列
+	 * @param cgData 更改数据
+	 */
+	public void update(String table, String cdColum, String cdData,
+			String cgColum, String cgData) {
+		clearMsg();
+		this.msg.setType(MessageType.C_REQ_UPDATE);
+		this.msg.setTable(table);
+		this.msg.setCdColum(cdColum);
+		this.msg.setCdData(cdData);
+		this.msg.setCgColum(cgColum);
+		this.msg.setCgData(cgData);
 		
 	}
 

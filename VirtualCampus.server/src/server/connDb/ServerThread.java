@@ -90,11 +90,14 @@ public class ServerThread extends Thread {
 					oos.flush();
 					ServerSrvThreadMgr.remove(clientID);
 				
-				}else if(type.equals(MessageType.C_REQ_UPDATEPWD)){
+				}else if(type.equals(MessageType.C_REQ_UPDATE)){
 					ServerThread sth = ServerSrvThreadMgr.get(clientID);
-					int username = Integer.parseInt(msg.getUsername());
-					String password = (String) msg.getPassword();
-					boolean createStatus = opdb.updatePwd(username, password);
+					String table = msg.getTable();
+					String cdColum = msg.getCdColum();
+					String cdData = msg.getCdData();
+					String cgColum = msg.getCgColum();
+					String cgData = msg.getCgData();
+					boolean createStatus = opdb.update(table, cdColum, cdData, cgColum, cgData);
 					Message msgRsp = new Message();
 					msgRsp.setType(MessageType.S_RET_STATUS);
 					if(createStatus){

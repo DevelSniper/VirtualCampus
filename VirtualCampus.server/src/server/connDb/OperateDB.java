@@ -66,7 +66,7 @@ public class OperateDB {
 			conn = DriverManager.getConnection(CONN_URL, USER_NAME, PASSWORD);
 			
 			Statement stmt = conn.createStatement();
-			sqlCreateUser = String.format("INSERT INTO `xindervella_VirtualCampus`.`vcUser` (`uID`, `uPwd`, `uRole`) VALUES ('%s', '%s', '%s')", uID, uPwd, uRole);
+			sqlCreateUser = String.format("INSERT INTO `vcUser` (`uID`, `uPwd`, `uRole`) VALUES ('%s', '%s', '%s')", uID, uPwd, uRole);
 			stmt.executeUpdate(sqlCreateUser);
 			return true;
 			
@@ -106,19 +106,25 @@ public class OperateDB {
 		return users;
 	}
 
-	public boolean updatePwd(int username, String pwd) throws SQLException {
-		String sqlUpdatePwd;
-		int uID = username;
-		String uPwd = pwd;
+
+	public boolean update(String table, String cdColum, String cdData,
+			String cgColum, String cgData) throws SQLException {
+		String sqlQuery;
+		String sqlUpdate;
 		try {
 			Class.forName(DRIVER_NAME);
 			conn = DriverManager.getConnection(CONN_URL, USER_NAME, PASSWORD);
 			
 			Statement stmt = conn.createStatement();
-			sqlUpdatePwd = String.format("UPDATE `xindervella_VirtualCampus`.`vcUser` SET `uPwd`='%s' WHERE `uID`='%s'", uPwd, uID);
-			stmt.executeUpdate(sqlUpdatePwd);
-			return true;
-			
+			sqlQuery = String.format("SELECT * FROM `%s` WHERE `%s`='%s'", table, cdColum, cdData);
+			ResultSet rsQuery = stmt.executeQuery(sqlQuery);
+			if(rsQuery.first()){
+				sqlUpdate = String.format("UPDATE `%s` SET `%s`='%s' WHERE `%s`='%s'", table, cgColum, cgData, cdColum, cdData);
+				stmt.executeUpdate(sqlUpdate);
+				return true;
+			}else{
+				return false;
+			}
 		}catch (SQLException e){
 			e.printStackTrace();
 			return false;
@@ -161,5 +167,6 @@ public class OperateDB {
 		
 		return stu;
 	}
+
 	
 }
