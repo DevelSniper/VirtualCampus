@@ -3,122 +3,31 @@ Virtual Campus
 
 ### TOC
 
-* [8.23日前完成各自负责模块 UI DEMO](#823日前完成各自负责模块-ui-demo)
-* [数据库相关](#数据库相关)
+* [任务表](#任务表)
+	* [8.23日前完成各自负责模块 UI DEMO](#823日前完成各自负责模块-ui-demo)
+	* [8.26日前提交各自负责模块界面](#826日前提交各自负责模块界面)
+	* [8.30日前提交各自负责模块 DEMO](#830日前提交各自负责模块-demo)
 * [git 使用方法](#git-使用方法)
 * [基本命名规范](#基本命名规范)
 * [代码书写规范](#基本命名规范)
 * [注释规范](#注释规范)
+* [数据库相关](#数据库相关)
 
 ===
-### 8.23日前完成各自负责模块 UI DEMO
+
+### 任务表：
+
+#### 8.23日前完成各自负责模块 UI DEMO
 
 注意是个人负责模块的所有界面，包括相关按钮的弹出效果等等，业务逻辑可以先不考虑。
 
 在所有模块合并时会将当前登录用户身份作为参数传递，共有三种身份 学生、教师、管理员，设计界面时需要全部考虑。
 
-如果三种身份所见页面相差较大可以将三个界面分开写，合并时我会再前一层判断然后按照不同身份调用不同窗口。
+#### 8.26日前提交各自负责模块界面
 
-如果三种身份所见界面相差不大或公共代码较多可以使用类似方法:
+#### 8.30日前提交各自负责模块 DEMO
 
-```java
-public xxxWindow (User userIn){
-
-	// public ui code block
-
-	if ( userIn.isStudent() ){
-
-		// student ui code block
-
-	} else if ( userIn.isTeacher() ) {
-
-		// teacher ui code block
-
-	} else if ( userIn.isAdmin() ){
-
-		// admin ui code block
-
-	}
-
-}
-
-```
-
-
-
-===
-
-###数据库相关
-
-数据库目前使用 mysql 只能通过内网访问
-
-> **Hostname:  121.248.63.106**
-
-> **Port: 3306**
-
-> **username:  xindervella**
-
-> **password:  hu@idi@nn@0**
-
-> **schemas:  xindervella_VirtualCampus**
-
-目前 **xindervella_VirtualCampus** 的数据表：
-
-|Tables\_in\_xindervella\_VirtualCampus	|
-|---------------------------------------|
-|	vcUser				|
-|	vcStudent			|
-|	vcTeacher			|
-|	vcClass				|
-|	vcCourse			|
-|	vcStudentCourse			|
-
-
-**vcUser** 表中测试数据：
-
-|    uID    |  uPwd   |  uRole  |
-| --------- | ------- | ------- |
-| 213110561 | 1234567 |  admin  |
-| 213110562 | 3456789 | student |
-| 213110563 | 4567890 | teacher |
-
-**vcStudent** 表中测试数据 (部分）：
-
-|   sCard   |   ...   |   ...   |   ...   |   ...   |   ...   |  sClassID  |
-| --------- | ------- | ------- | ------- | ------- | ------- | ---------- |
-| 213110561 |   ...   |   ...   |   ...   |   ...   |   ...   |   090111   |
-
-**vcClass** 表中测试数据 （部分）：
-
-|  cClassID |   ...   |   ...   |   ...   |   ...   |   ...   |   cMajor   |
-| --------- | ------- | ------- | ------- | ------- | ------- | ---------- |
-|   090111  |   ...   |   ...   |   ...   |   ...   |   ...   |     CSE    |
-
-```sql
--- -----------------------------------------------------
--- 如需获得 学生相关信息 
--- 并通过 vcStudent 表中 sClassID 获得相关班级信息 sql 语句可以写为：
--- -----------------------------------------------------
-SELECT * FROM vcStudent INNER JOIN vcClass ON sClassID=cClassID;
-
--- -----------------------------------------------------
--- 如果需要同时限制班级ID 可以使用 AND 关键字:
--- -----------------------------------------------------
-SELECT * FROM vcStudent INNER JOIN vcClass ON sClassID=cClassID AND sClassID='090111';
-```
-
-常用 [sql 语句](http://www.cnblogs.com/yubinfeng/archive/2010/11/02/1867386.html)
-
-测试数据可以自己添加
-
-<br />
-
-数据库操作样例：[VirtualCampus.operateDbSample](https://github.com/xindervella/VirtualCampus/tree/master/VirtualCampus.operateDbSample)
-
-如需在 eclipse 中操作数据库需要在相关项目 `Build Path` → `Add Library` → `User Library` 中 添加相关 jar 包
-
-项目中使用 [mysql-connector-java-5.1.26-bin.jar](https://github.com/xindervella/VirtualCampus/tree/master/VirtualCampus.operateDbSample/mysql-connector-java-5.1.26)
-
+包括各自负责模块全部界面，全部业务逻辑，此阶段不需考虑UI美观。
 
 ===
 
@@ -298,4 +207,77 @@ public void test(){
 }
 ```
 具体参照 [javadoc](http://en.wikipedia.org/wiki/Javadoc)
+
+===
+
+###数据库相关
+
+数据库目前使用 mysql 只能通过内网访问
+
+> **Hostname:  121.248.63.106**
+
+> **Port: 3306**
+
+> **username:  xindervella**
+
+> **password:  hu@idi@nn@0**
+
+> **schemas:  xindervella_VirtualCampus**
+
+目前 **xindervella_VirtualCampus** 的数据表：
+
+|Tables\_in\_xindervella\_VirtualCampus	|
+|---------------------------------------|
+|	vcUser				|
+|	vcStudent			|
+|	vcTeacher			|
+|	vcClass				|
+|	vcCourse			|
+|	vcStudentCourse			|
+
+
+**vcUser** 表中测试数据：
+
+|    uID    |  uPwd   |  uRole  |
+| --------- | ------- | ------- |
+| 213110561 | 1234567 |  admin  |
+| 213110562 | 3456789 | student |
+| 213110563 | 4567890 | teacher |
+
+**vcStudent** 表中测试数据 (部分）：
+
+|   sCard   |   ...   |   ...   |   ...   |   ...   |   ...   |  sClassID  |
+| --------- | ------- | ------- | ------- | ------- | ------- | ---------- |
+| 213110561 |   ...   |   ...   |   ...   |   ...   |   ...   |   090111   |
+
+**vcClass** 表中测试数据 （部分）：
+
+|  cClassID |   ...   |   ...   |   ...   |   ...   |   ...   |   cMajor   |
+| --------- | ------- | ------- | ------- | ------- | ------- | ---------- |
+|   090111  |   ...   |   ...   |   ...   |   ...   |   ...   |     CSE    |
+
+```sql
+-- -----------------------------------------------------
+-- 如需获得 学生相关信息
+-- 并通过 vcStudent 表中 sClassID 获得相关班级信息 sql 语句可以写为：
+-- -----------------------------------------------------
+SELECT * FROM vcStudent INNER JOIN vcClass ON sClassID=cClassID;
+
+-- -----------------------------------------------------
+-- 如果需要同时限制班级ID 可以使用 AND 关键字:
+-- -----------------------------------------------------
+SELECT * FROM vcStudent INNER JOIN vcClass ON sClassID=cClassID AND sClassID='090111';
+```
+
+常用 [sql 语句](http://www.cnblogs.com/yubinfeng/archive/2010/11/02/1867386.html)
+
+测试数据可以自己添加
+
+<br />
+
+数据库操作样例：[VirtualCampus.operateDbSample](https://github.com/xindervella/VirtualCampus/tree/master/VirtualCampus.operateDbSample)
+
+如需在 eclipse 中操作数据库需要在相关项目 `Build Path` → `Add Library` → `User Library` 中 添加相关 jar 包
+
+项目中使用 [mysql-connector-java-5.1.26-bin.jar](https://github.com/xindervella/VirtualCampus/tree/master/VirtualCampus.operateDbSample/mysql-connector-java-5.1.26)
 
