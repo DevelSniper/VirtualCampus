@@ -1,6 +1,5 @@
 package client.ui;
 
-import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.ImageIcon;
@@ -11,6 +10,9 @@ import javax.swing.JTextField;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+
+import conn.common.User;
+import client.connDb.ClientMsgHelper;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -44,7 +46,11 @@ public class ClientLoginWindow {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(frame.getOwner());
 		
+<<<<<<< HEAD
 		//鑳屾櫙
+=======
+		
+>>>>>>> c04b6f68e9db18c63bad194bb13d6527ac309f0a
 		JPanel jp = new JPanel();
 		jp.setOpaque(false);
 		frame.getContentPane().add(jp);
@@ -53,14 +59,17 @@ public class ClientLoginWindow {
 		JLabel background = new JLabel(img);
 		frame.getLayeredPane().add(background, new Integer(Integer.MIN_VALUE));
 		background.setBounds(0, 0, img.getIconWidth(), img.getIconHeight());
-//		
+
 		jp.setLayout(null);
+<<<<<<< HEAD
 //		鐩存帴鐢诲湪鑳屾櫙涓�
 //		JLabel lblUserID = new JLabel("涓�崱閫氬彿/UserID:");
 //		lblUserID.setBounds(23, 145, 96, 17);
 //		lblUserID.setHorizontalAlignment(SwingConstants.CENTER);
 //		lblUserID.setVisible(true);
 //		jp.add(lblUserID);
+=======
+>>>>>>> c04b6f68e9db18c63bad194bb13d6527ac309f0a
 		textUserID = new JTextField();
 		textUserID.addKeyListener(new KeyAdapter() {
 			@Override
@@ -74,6 +83,7 @@ public class ClientLoginWindow {
 		textUserID.setBounds(80, 205, 220, 30);
 		jp.add(textUserID);
 		textUserID.setColumns(10);
+<<<<<<< HEAD
 //		鐩存帴鐢诲湪鑳屾櫙涓�
 //		JLabel lblPassword = new JLabel("瀵嗙爜/Password:");
 //		lblPassword.setBounds(35, 196, 84, 15);
@@ -84,6 +94,13 @@ public class ClientLoginWindow {
 		jp.add(passwordField);
 //
 		JButton btnLogin = new JButton(""); //鐢ㄥ浘鐗囨浛鎹�
+=======
+		passwordField = new JPasswordField();
+		passwordField.setBounds(80, 290, 220, 30);
+		jp.add(passwordField);
+
+		JButton btnLogin = new JButton("");
+>>>>>>> c04b6f68e9db18c63bad194bb13d6527ac309f0a
 		btnLogin.setBorderPainted(false);	
 		btnLogin.setIcon(new ImageIcon(getClass().getResource("/res/login.png")));
 		btnLogin.setPressedIcon(new ImageIcon(
@@ -91,17 +108,35 @@ public class ClientLoginWindow {
 		btnLogin.setBounds(80, 350, 112, 40);
 
 		btnLogin.addMouseListener(new MouseAdapter() {
+			// 登陆按钮监听
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-//				String loginID = textUserID.getText();
-//				String password = String.valueOf(passwordField.getPassword());
-				ClientMenuWindow cmw = new ClientMenuWindow(window);
-				cmw.setVisible(true);
+				String username = textUserID.getText();
+				String password = String.valueOf(passwordField.getPassword());
+				
+				if (username.isEmpty() || password.isEmpty()){
+					JOptionPane.showMessageDialog(null, "用户名/密码不能为空！", "错误",JOptionPane.ERROR_MESSAGE);			
+				}else{
+					ClientMsgHelper cmh = new ClientMsgHelper();
+					cmh.loginMsg(username, password);
+					cmh.sendMsg();
+					cmh.recieveMsg();
+					User userInMsg = (User) cmh.getDataInMsg();
+					if (userInMsg == null){
+						JOptionPane.showMessageDialog(null, "用户名/密码错误！", "错误",JOptionPane.ERROR_MESSAGE);
+					} else {
+						ClientMenuWindow cmw = new ClientMenuWindow(window, userInMsg);
+						cmw.setVisible(true);
+					}
+					cmh.disconnect();
+//					User user = new User("213110561", "123456", "student");
+//					ClientMenuWindow cmw = new ClientMenuWindow(window, user);
+//					cmw.setVisible(true);
+				}			
 			}
 		});
-//		
 		jp.add(btnLogin);
-//
+		
 		JButton btnReset = new JButton("");
 		btnReset.setIcon(new ImageIcon(getClass().getResource("/res/reset.png")));
 		btnReset.setPressedIcon(new ImageIcon(
@@ -117,7 +152,7 @@ public class ClientLoginWindow {
 		});
 
 		jp.add(btnReset);
-//
+		
 		frame.setVisible(true);
 	}
 

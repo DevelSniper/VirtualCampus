@@ -1,7 +1,6 @@
 package conn.common;
 
 import java.io.Serializable;
-import java.util.Vector;
 
 /**
  * 消息类
@@ -12,70 +11,97 @@ public class Message implements Serializable {
 	protected static final long serialVersionUID = -2034483694793482528L;
 	protected String type; // 消息类型
 	protected Client client; // 客户端身份（避免发错数据）
-	protected String content; // 文字数据
-	protected Vector<User> userdata;
+	
+	protected String schema;
+	protected String table;
+	protected String cdColum;
+	protected String cdData;
+	protected String cgColum;
+	protected String cgData;
+
+	protected String username;
+	protected String password;
+	protected String role;
 	protected Object data;
-	protected String[] paras;
-	protected String[] vars; // 查询语句用的，见MessageType
-
-	public String[] getVars() {
-		return this.vars;
-	}
-
-	public String[] getParas() {
-		return this.paras;
-	}
-
-	public String getClientID() {
-		return Client.clientID;
-	}
-
-	public void setParas(String[] p) {
-		this.paras = p;
-	}
-
+	protected boolean isSuccess;
 	public String getType() {
 		return type;
 	}
-
-	public void setType(String t) {
-		this.type = t;
+	public void setType(String type) {
+		this.type = type;
 	}
-
-	public Client getClint() {
+	public Client getClient() {
 		return client;
 	}
-
-	public String getContent() {
-		return content;
+	public void setClient(Client client) {
+		this.client = client;
 	}
-
-	public void setContent(String c) {
-		this.content = c;
+	public String getSchema() {
+		return schema;
 	}
-
-	public Vector<User> getUsers() {
-		return userdata;
+	public void setSchema(String schema) {
+		this.schema = schema;
 	}
-
-	public void setUsers(Vector<User> u) {
-		this.userdata = u;
+	public String getTable() {
+		return table;
 	}
-
+	public void setTable(String table) {
+		this.table = table;
+	}
+	public String getCdColum() {
+		return cdColum;
+	}
+	public void setCdColum(String cdColum) {
+		this.cdColum = cdColum;
+	}
+	public String getCdData() {
+		return cdData;
+	}
+	public void setCdData(String cdData) {
+		this.cdData = cdData;
+	}
+	public String getCgColum() {
+		return cgColum;
+	}
+	public void setCgColum(String cgColum) {
+		this.cgColum = cgColum;
+	}
+	public String getCgData() {
+		return cgData;
+	}
+	public void setCgData(String cgData) {
+		this.cgData = cgData;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
 	public Object getData() {
 		return data;
 	}
-
-	public void setData(Object d) {
-		this.data = d;
+	public void setData(Object data) {
+		this.data = data;
 	}
-
-	public void setClientID(String cID) {
-		Client.clientID = cID;
+	public boolean isSuccess() {
+		return isSuccess;
 	}
-
-	public void setVars(String[] vars) {
-		this.vars = vars;
+	public void setSuccess(boolean isSuccess) {
+		this.isSuccess = isSuccess;
 	}
+	
 
 }
