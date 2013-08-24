@@ -44,7 +44,7 @@ public class ClientLoginWindow {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(frame.getOwner());
 		
-		//背景
+		//鑳屾櫙
 		JPanel jp = new JPanel();
 		jp.setOpaque(false);
 		frame.getContentPane().add(jp);
@@ -55,8 +55,8 @@ public class ClientLoginWindow {
 		background.setBounds(0, 0, img.getIconWidth(), img.getIconHeight());
 //		
 		jp.setLayout(null);
-//		直接画在背景上
-//		JLabel lblUserID = new JLabel("一卡通号/UserID:");
+//		鐩存帴鐢诲湪鑳屾櫙涓�
+//		JLabel lblUserID = new JLabel("涓�崱閫氬彿/UserID:");
 //		lblUserID.setBounds(23, 145, 96, 17);
 //		lblUserID.setHorizontalAlignment(SwingConstants.CENTER);
 //		lblUserID.setVisible(true);
@@ -74,8 +74,8 @@ public class ClientLoginWindow {
 		textUserID.setBounds(80, 205, 220, 30);
 		jp.add(textUserID);
 		textUserID.setColumns(10);
-//		直接画在背景上
-//		JLabel lblPassword = new JLabel("密码/Password:");
+//		鐩存帴鐢诲湪鑳屾櫙涓�
+//		JLabel lblPassword = new JLabel("瀵嗙爜/Password:");
 //		lblPassword.setBounds(35, 196, 84, 15);
 //		jp.add(lblPassword);
 //		lblPassword.setVisible(true);
@@ -83,7 +83,7 @@ public class ClientLoginWindow {
 		passwordField.setBounds(80, 290, 220, 30);
 		jp.add(passwordField);
 //
-		JButton btnLogin = new JButton(""); //用图片替换
+		JButton btnLogin = new JButton(""); //鐢ㄥ浘鐗囨浛鎹�
 		btnLogin.setBorderPainted(false);	
 		btnLogin.setIcon(new ImageIcon(getClass().getResource("/res/login.png")));
 		btnLogin.setPressedIcon(new ImageIcon(
