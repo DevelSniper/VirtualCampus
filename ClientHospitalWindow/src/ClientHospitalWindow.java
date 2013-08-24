@@ -1,7 +1,4 @@
 import javax.swing.*;
-
-//import client.ui.ClientLoginWindow;
-
 import java.awt.*;
 import java.awt.event.*;
 
@@ -36,6 +33,8 @@ public class ClientHospitalWindow {
 		final JLabel label5 = new JLabel("预约状态：");
 
 		
+		
+		
 		btnAppointment.setBounds(350, 50, 112, 40);
 		btnMessage.setBounds(350, 140, 112, 40);
 		label0.setBounds(90, 10, 112, 40);//个人资料
@@ -57,6 +56,12 @@ public class ClientHospitalWindow {
 			public void actionPerformed(ActionEvent e){
 				//label1.setText("挂尼玛");
 				new ClientHospitalAppointment();
+			}
+		});
+		btnMessage.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				//label1.setText("挂尼玛");
+				new ClientHospitalMessageTeacher();
 			}
 		});
 		frame.addWindowListener(new WindowAdapter(){
