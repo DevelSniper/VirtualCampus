@@ -25,6 +25,8 @@ public class ClientHospitalWindow {
 		pane.setLayout(null);
 		JButton btnAppointment = new JButton("看病预约");
 		JButton btnMessage = new JButton("在线留言");
+		JButton btnClose = new JButton("关闭");
+		
 		final JLabel label0 = new JLabel("个人资料");
 		final JLabel label1 = new JLabel("一卡通号：");
 		final JLabel label2 = new JLabel("姓        名：");
@@ -35,8 +37,9 @@ public class ClientHospitalWindow {
 		
 		
 		
-		btnAppointment.setBounds(350, 50, 112, 40);
-		btnMessage.setBounds(350, 140, 112, 40);
+		btnAppointment.setBounds(350, 30, 112, 40);
+		btnMessage.setBounds(350, 90, 112, 40);
+		btnClose.setBounds(350, 150, 112, 40);
 		label0.setBounds(90, 10, 112, 40);//个人资料
 		label1.setBounds(40, 40, 112, 40);
 		label2.setBounds(40, 70, 112, 40);
@@ -45,6 +48,7 @@ public class ClientHospitalWindow {
 		label5.setBounds(40, 160, 112, 40);
 		pane.add(btnAppointment);
 		pane.add(btnMessage);
+		pane.add(btnClose);
 		pane.add(label5);
 		pane.add(label0);
 		pane.add(label1);
@@ -55,7 +59,7 @@ public class ClientHospitalWindow {
 		btnAppointment.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				//label1.setText("挂尼玛");
-				new ClientHospitalAppointment();
+				new ClientHospitalAppointmentTeacher();
 			}
 		});
 		btnMessage.addActionListener(new ActionListener(){
