@@ -38,6 +38,7 @@ public class ClientHospitalMessageTeacher {
 		JScrollPane spMessage = new JScrollPane(tbMessage); 
 		JTextArea taMessage = new JTextArea("输入内容");
 		JButton btMessage = new JButton("提交留言");
+		
 		//布局
 		//tbMessage.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		tbMessage.getColumnModel().getColumn(0).setPreferredWidth(60);//设置第一列“留言人”性质
