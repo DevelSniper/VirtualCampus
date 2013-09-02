@@ -51,6 +51,7 @@ public class ClientHospitalWindow {
 		JLabel lbName = new JLabel(student.getUserName());
 		JLabel lbSex = new JLabel(student.getUserSex());
 		JLabel lbRole = new JLabel("学生");
+		JLabel lbStatus = new JLabel(getAppointmentStatus(student.getUserCard()));
 		
 
 		
@@ -60,11 +61,17 @@ public class ClientHospitalWindow {
 		btnMessage.setBounds(350, 90, 112, 40);
 		btnClose.setBounds(350, 150, 112, 40);
 		label0.setBounds(90, 10, 112, 40);//个人资料
-		label1.setBounds(40, 40, 112, 40);
-		label2.setBounds(40, 70, 112, 40);
-		label3.setBounds(40, 100, 112, 40);
-		label4.setBounds(40, 130, 112, 40);
-		label5.setBounds(40, 160, 112, 40);
+		label1.setBounds(40, 40, 112, 40);//一卡通
+		lbCard.setBounds(110, 40, 112, 40);
+		label2.setBounds(40, 70, 112, 40);//姓名
+		lbName.setBounds(110, 70, 112, 40);
+		label3.setBounds(40, 100, 112, 40);//性别
+		lbSex.setBounds(110, 100, 112, 40);
+		label4.setBounds(40, 130, 112, 40);//身份
+		lbRole.setBounds(110, 130, 112, 40);
+		label5.setBounds(40, 160, 112, 40);//状态
+		lbStatus.setBounds(110, 160, 200, 40);
+		lbStatus.setForeground(Color.blue);
 		pane.add(btnAppointment);
 		pane.add(btnMessage);
 		pane.add(btnClose);
@@ -74,10 +81,14 @@ public class ClientHospitalWindow {
 		pane.add(label2);
 		pane.add(label3);
 		pane.add(label4);
+		pane.add(lbCard);
+		pane.add(lbName);
+		pane.add(lbSex);
+		pane.add(lbRole);
+		pane.add(lbStatus);
 		//对按钮的事件处理
 		btnAppointment.addActionListener(new ActionListener(){//预约按钮的监听器
 			public void actionPerformed(ActionEvent e){
-				//new ClientHospitalAppointment(student);
 				try {
 					new ClientHospitalAppointmentTeacher();
 				} catch (SQLException e1) {
@@ -86,10 +97,11 @@ public class ClientHospitalWindow {
 				}
 			}
 		});
+		//留言按钮的监听
 		btnMessage.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				//label1.setText("挂尼玛");
-				new ClientHospitalMessageStudent(student);
+				new ClientHospitalMessageTeacher(student);
 			}
 		});
 		frame.addWindowListener(new WindowAdapter(){
@@ -104,5 +116,15 @@ public class ClientHospitalWindow {
 		frame.setVisible(true);
 	}
 	
+	public String getAppointmentStatus(String cardID){
+		try {
+			return(new ClientHospitalOperateDB().getAppointmentStatus(cardID));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
 
 }

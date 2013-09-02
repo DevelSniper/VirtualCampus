@@ -72,7 +72,6 @@ public class ClientHospitalAppointment {
 		
 		btnMakeApt.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-			//	System.out.println(month);
 				//获取ComboBox的内容并传入数据库
 				String kind=cobDisease.getSelectedItem().toString();
 				String year=cobYear.getSelectedItem().toString();

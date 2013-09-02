@@ -12,6 +12,32 @@ public class ClientHospitalOperateDB {
 	public Statement connStat;
 	protected Connection conn;
 	
+	public String getAppointmentStatus(String cardID)throws SQLException{
+		//获取指定cardID的预约信息
+		String sql;
+		try{
+			Class.forName(DRIVER_NAME);
+			//System.out.println("d");
+			conn = DriverManager.getConnection(CONN_URL, USER_NAME, PASSWORD);
+			Statement stmt = conn.createStatement();
+			sql = "SELECT * FROM vcHospitalAppointment";
+			stmt.executeQuery(sql);
+			ResultSet rs = stmt.executeQuery(sql);//获取所有预约信息存于rs中
+			while(rs.next()){
+				if(rs.getString(1).equals(cardID))
+					return (rs.getString(4)+"  "+rs.getString(5)+"  "+rs.getString(6));
+			}
+			return "未预约";
+		
+		} catch (Exception e){
+			e.printStackTrace();
+		} finally {
+			conn.close();
+		}
+		return null;
+
+	}
+	
 	public void makeAppointment(String Card,String Name,String Sex,String Kind ,String Date,String Status)throws SQLException{
 		String sql;
 		try{
@@ -131,11 +157,9 @@ public class ClientHospitalOperateDB {
 				Vector<String> temp = new Vector<String>();
 				String fromName=rs.getString(2);
 				String toName=rs.getString(3);
-				System.out.println(fromName.equals(Name));
 				if(fromName.equals(Name)||toName==Name){
 					temp.addElement(fromName);
 					temp.addElement(rs.getString(4));
-					System.out.println(2);
 					dataOfTable.addElement(temp);
 				}													
 			}
@@ -154,6 +178,7 @@ public class ClientHospitalOperateDB {
 			conn = DriverManager.getConnection(CONN_URL, USER_NAME, PASSWORD);
 			Statement stmt = conn.createStatement();
 			//获取留言ID号
+			/*
 			sql = "SELECT * FROM vcHospitalMessage";
 			ResultSet rs=stmt.executeQuery(sql);
 			int numOfMessage=0;
@@ -164,10 +189,11 @@ public class ClientHospitalOperateDB {
 					numOfMessage=Integer.parseInt(rs.getString(1));
 				while(rs.next());
 				numOfMessage++;
-			}
+			}     
+			 */
 					
 			//增加新的留言
-			sql = "INSERT INTO vcHospitalMessage VALUES ('"+ numOfMessage+"','"+ fromName+"','"+ toName+"','" +message+ "')" ;
+			sql = "INSERT INTO vcHospitalMessage (mFrom,mTo,mMessage) VALUES ('"+ fromName+"','"+ toName+"','" +message+ "')" ;//留言ID号已经设置为自增
 			stmt.executeUpdate(sql);
 				
 			
@@ -176,6 +202,69 @@ public class ClientHospitalOperateDB {
 		} finally {
 			conn.close();
 		}
+	}
+	public void getListOfName(Vector listOfName) throws SQLException{
+		//获取留言人员树
+		String sql;
+		try{
+			listOfName.clear();//清空显示的留言表
+			Class.forName(DRIVER_NAME);
+			//System.out.println("d");
+			conn = DriverManager.getConnection(CONN_URL, USER_NAME, PASSWORD);
+			Statement stmt = conn.createStatement();
+			sql = "SELECT * FROM vcHospitalMessage";
+			stmt.executeQuery(sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			while(rs.next()){
+				String fromName=rs.getString(2);
+				String toName=rs.getString(3);
+				if(toName.equals("ALL")){
+					int flag=1;
+					for(int i=0;i<listOfName.size();i++)
+						if(listOfName.get(i).equals(fromName)){
+							flag=0;
+							break;
+						}
+					if(flag==1)
+						listOfName.addElement(fromName);
+				}													
+			}
+		} catch (Exception e){
+			e.printStackTrace();
+		} finally {
+			conn.close();
+		}
+		
+	}
+	public void getMessageOf(Vector dataOfTable,String selName) throws SQLException{
+		//传入Name，搜寻所有和此人有关的留言并存入dataOfTable
+		String sql;
+		try{
+			dataOfTable.clear();//清空显示的留言表
+			Class.forName(DRIVER_NAME);
+			//System.out.println("d");
+			conn = DriverManager.getConnection(CONN_URL, USER_NAME, PASSWORD);
+			Statement stmt = conn.createStatement();
+			sql = "SELECT * FROM vcHospitalMessage";
+			stmt.executeQuery(sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			while(rs.next()){
+				String fromName=rs.getString(2);
+				String toName=rs.getString(3);
+				if(fromName.equals(selName)||toName.equals(selName)){
+					Vector temp = new Vector();
+					temp.addElement(fromName);
+					//temp.addElement(toName);
+					temp.addElement(rs.getString(4));
+					dataOfTable.addElement(temp);
+				}													
+			}
+		} catch (Exception e){
+			e.printStackTrace();
+		} finally {
+			conn.close();
+		}
+		
 	}
 	
 	

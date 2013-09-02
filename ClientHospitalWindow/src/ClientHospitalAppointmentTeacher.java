@@ -105,7 +105,7 @@ public class ClientHospitalAppointmentTeacher {
 		
 		
 		
-		//System.out.println(rs.getString(1));
+
 		/*while(rs.next())
 		{
 			//rs.absolute(2);
