@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.Hashtable;
 import java.util.Vector;
 public class ClientHospitalMessageTeacher {
-	public ClientHospitalMessageTeacher(final Student student){
+	public ClientHospitalMessageTeacher(final Teacher testTeacher){
 		Vector headOfTable = new Vector();
 		final Vector dataOfTable = new Vector();
 		headOfTable.addElement("留言人");
@@ -38,6 +38,7 @@ public class ClientHospitalMessageTeacher {
 		JScrollPane spMessage = new JScrollPane(tbMessage); 
 		final JTextArea taMessage = new JTextArea("输入内容");
 		JButton btMessage = new JButton("提交留言");
+		JButton btDeleteMessage = new JButton("删除留言");
 		taMessage.setLineWrap(true);//textarea自动换行
 		//监听器们
 		//JTree的选中监听器
@@ -58,7 +59,7 @@ public class ClientHospitalMessageTeacher {
 		        String selName = selectedNode.toString(); //获取树中选中的人名
 		        String message=taMessage.getText();//获取留言内容
 				try {
-					new ClientHospitalOperateDB().leaveMessage(student.userName, selName, message);
+					new ClientHospitalOperateDB().leaveMessage(testTeacher.userName, selName, message);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -82,12 +83,15 @@ public class ClientHospitalMessageTeacher {
 		spMessage.setBounds(160, 10,260, 240);
 		taMessage.setBounds(430,10,200,180);
 		btMessage.setBounds(470,210,112,40);
+		//btDeleteMessage.setBounds(550, 210, 112, 40);
 		scrollPane.setBounds(10, 10, 140, 240);
 		pane.add(spMessage);
 		pane.add(taMessage);
 		pane.add(btMessage);
+		//pane.add(btDeleteMessage);
 		c.add(pane);
 		frame.setSize(660,300);
+		//frame.setSize(690,300);
 		frame.setVisible(true);
 	}
 	
@@ -95,7 +99,7 @@ public class ClientHospitalMessageTeacher {
 	
 	protected void updateListOfName(Vector listOfName,JTree tree){
 		try {
-			new ClientHospitalOperateDB().getListOfName(listOfName);
+			new ClientHospitalOperateDB().getMessageNameList(listOfName);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

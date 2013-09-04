@@ -38,13 +38,23 @@ public class ClientHospitalOperateDB {
 
 	}
 	
-	public void makeAppointment(String Card,String Name,String Sex,String Kind ,String Date,String Status)throws SQLException{
+	public boolean makeAppointment(String Card,String Name,String Sex,String Kind ,String Date,String Status)throws SQLException{
+		//学生make预约
 		String sql;
 		try{
 			Class.forName(DRIVER_NAME);
-			//System.out.println("d");
 			conn = DriverManager.getConnection(CONN_URL, USER_NAME, PASSWORD);
 			Statement stmt = conn.createStatement();
+			sql = "SELECT * FROM vcHospitalAppointment WHERE aCardID='"+Card+"'";
+			stmt.executeQuery(sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			if(rs.next())
+				return false;//如果已经有该学生的预约，则直接返回
+			
+			Class.forName(DRIVER_NAME);
+			//System.out.println("d");
+			conn = DriverManager.getConnection(CONN_URL, USER_NAME, PASSWORD);
+			stmt = conn.createStatement();
 			sql = "INSERT INTO `xindervella_VirtualCampus`.`vcHospitalAppointment` (aCardID, aName, aSex, aKind, aDate,aStatus) VALUES ('"+ Card+"','"+ Name+"','"+ Sex+"','" +Kind+ "','"+ Date +"','"+ Status +"')" ;
 			
 			stmt.executeUpdate(sql);	
@@ -54,9 +64,11 @@ public class ClientHospitalOperateDB {
 		} finally {
 			conn.close();
 		}
+		return true;
 	}
 	
 	public void getAppointment(Vector dataOfTable)throws SQLException{
+		//获取预约信息
 		String sql;
 		try{
 			Class.forName(DRIVER_NAME);
@@ -91,7 +103,7 @@ public class ClientHospitalOperateDB {
 			conn = DriverManager.getConnection(CONN_URL, USER_NAME, PASSWORD);
 			Statement stmt = conn.createStatement();
 			sql = "DELETE FROM vcHospitalAppointment WHERE aCardID='"+cardID+"'";
-	
+			
 			stmt.executeUpdate(sql);	
 			
 		} catch (Exception e){
@@ -105,7 +117,7 @@ public class ClientHospitalOperateDB {
 	
 	
 	public void agreeAppointment(String cardID) throws SQLException{
-		//传入cardID，删除此人的预约
+		//传入cardID，同意此人的预约
 		String sql;
 		try{
 			Class.forName(DRIVER_NAME);
@@ -153,11 +165,10 @@ public class ClientHospitalOperateDB {
 			stmt.executeQuery(sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next()){
-				
 				Vector<String> temp = new Vector<String>();
 				String fromName=rs.getString(2);
 				String toName=rs.getString(3);
-				if(fromName.equals(Name)||toName==Name){
+				if(fromName.equals(Name)||toName.equals(Name)){
 					temp.addElement(fromName);
 					temp.addElement(rs.getString(4));
 					dataOfTable.addElement(temp);
@@ -171,6 +182,7 @@ public class ClientHospitalOperateDB {
 		
 	}
 	public void leaveMessage(String fromName,String toName,String message)throws SQLException{
+		//留下留言
 		String sql;
 		try{
 			Class.forName(DRIVER_NAME);
@@ -203,7 +215,7 @@ public class ClientHospitalOperateDB {
 			conn.close();
 		}
 	}
-	public void getListOfName(Vector listOfName) throws SQLException{
+	public void getMessageNameList(Vector listOfName) throws SQLException{
 		//获取留言人员树
 		String sql;
 		try{
@@ -267,9 +279,162 @@ public class ClientHospitalOperateDB {
 		
 	}
 	
+	public void createPatient(String name,String sex,String time,String kind,String inOrNot,String inTime,String outTime,String roomNumber,String symptom)throws SQLException{
+		//增加病人信息
+		String sql;
+		try{
+			Class.forName(DRIVER_NAME);
+			//System.out.println("d");
+			conn = DriverManager.getConnection(CONN_URL, USER_NAME, PASSWORD);
+			Statement stmt = conn.createStatement();
+			sql = "INSERT INTO vcHospitalPatient (pName,pSex,pTime,pKind,pSymptom,pInOrNot,pInTime,pOutTime,pRoomNumber) VALUES ('"+ name+"','"+ sex+"','"+ time+"','" +kind+ "','"+ symptom +"','"+ inOrNot +"','"+ inTime +"','"+ outTime +"','"+ roomNumber +"')" ;
+			stmt.executeUpdate(sql);	
+		} catch (Exception e){
+			e.printStackTrace();
+		} finally {
+			conn.close();
+		}
+	}
 	
+	public void getPatient(Vector dataOfTable)throws SQLException{
+		//查询所有病人信息
+		String sql;
+		dataOfTable.clear();
+		try{
+			Class.forName(DRIVER_NAME);
+			//System.out.println("d");
+			conn = DriverManager.getConnection(CONN_URL, USER_NAME, PASSWORD);
+			Statement stmt = conn.createStatement();
+			sql = "SELECT * FROM vcHospitalPatient";
+			stmt.executeQuery(sql);
+			ResultSet rs = stmt.executeQuery(sql);//获取所有预约信息存于rs中
+			while(rs.next()){
+				Vector temp = new Vector();
+				for(int i=2;i<11;i++)
+					temp.addElement(rs.getString(i));
+				dataOfTable.addElement(temp);
+			}
+			stmt.close();
+		
+		} catch (Exception e){
+			e.printStackTrace();
+		} finally {
+			conn.close();
+		}
+
+	}
+	public void deletePatient(String selectName) throws SQLException{
+		//传入病人name，删除此人
+				String sql;
+				try{
+					Class.forName(DRIVER_NAME);
+					//System.out.println("d");
+					conn = DriverManager.getConnection(CONN_URL, USER_NAME, PASSWORD);
+					Statement stmt = conn.createStatement();
+					sql = "DELETE FROM vcHospitalPatient WHERE pName='"+selectName+"'";
+					stmt.executeUpdate(sql);	
+					
+				} catch (Exception e){
+					e.printStackTrace();
+				} finally {
+					conn.close();
+				}
+	}
 	
+	public void searchPatient(Vector dataOfTable,String searchName) throws SQLException{
+		//传入病人name，获取并只返回此人信息
+				String sql;
+				dataOfTable.clear();
+				try{
+					//System.out.println("1");
+					dataOfTable.clear();
+					Class.forName(DRIVER_NAME);
+					//System.out.println("d");
+					conn = DriverManager.getConnection(CONN_URL, USER_NAME, PASSWORD);
+					Statement stmt = conn.createStatement();
+					sql = "SELECT * FROM vcHospitalPatient WHERE pName='"+searchName+"'";
+					stmt.executeQuery(sql);
+					ResultSet rs = stmt.executeQuery(sql);//获取所有预约信息存于rs中
+				//	System.out.println(rs.getString(1));
+					while(rs.next()){
+						System.out.println(rs.getString(1));
+						Vector temp = new Vector();
+						for(int i=2;i<11;i++)
+							temp.addElement(rs.getString(i));
+						dataOfTable.addElement(temp);
+					}
+					stmt.close();	
+					
+				} catch (Exception e){
+					e.printStackTrace();
+				} finally {
+					conn.close();
+				}
+	}
+	public Student getStudentInfo(String cardId) throws SQLException{
+		//查询并返回指定cardId的学生对象
+		String sql;
+		try{
+			Student testStudent = new Student();
+			Class.forName(DRIVER_NAME);
+			//System.out.println("d");
+			conn = DriverManager.getConnection(CONN_URL, USER_NAME, PASSWORD);
+			Statement stmt = conn.createStatement();
+			sql = "SELECT * FROM vcStudent WHERE sCard='"+cardId+"'";
+			stmt.executeQuery(sql);
+			ResultSet rs = stmt.executeQuery(sql);//获取所有预约信息存于rs中
+			while(rs.next()){
+					testStudent.setUserCard(rs.getString(1));
+					testStudent.setUserID(rs.getString(2));
+					testStudent.setUserName(rs.getString(3));
+					testStudent.setUserSex(rs.getString(4));
+					testStudent.setUserClass(rs.getString(5));
+					testStudent.setUserBirthday(rs.getString(6));
+					testStudent.setUserHometown(rs.getString(7));
+					
+			}
+			stmt.close();	
+			return testStudent;
+			
+		} catch (Exception e){
+			e.printStackTrace();
+		} finally {
+			conn.close();
+		}
+		return null;
+	}
 	
+	public Teacher getTeacherInfo(String cardId) throws SQLException{
+		//查询并返回指定cardId的老师对象
+		String sql;
+		try{
+			Teacher testTeacher = new Teacher();
+			Class.forName(DRIVER_NAME);
+			//System.out.println("d");
+			conn = DriverManager.getConnection(CONN_URL, USER_NAME, PASSWORD);
+			Statement stmt = conn.createStatement();
+			sql = "SELECT * FROM vcTeacher WHERE tCard='"+cardId+"'";
+			stmt.executeQuery(sql);
+			ResultSet rs = stmt.executeQuery(sql);//获取所有预约信息存于rs中
+			while(rs.next()){
+					testTeacher.setUserCard(rs.getString(1));
+					testTeacher.setUserID(rs.getString(2));
+					testTeacher.setUserName(rs.getString(3));
+					testTeacher.setUserSex(rs.getString(4));
+					testTeacher.setUserClass(rs.getString(5));
+					
+			}
+			stmt.close();	
+			return testTeacher;
+			
+		} catch (Exception e){
+			e.printStackTrace();
+		} finally {
+			conn.close();
+		}
+		return null;
+	}
+
 
 }
 

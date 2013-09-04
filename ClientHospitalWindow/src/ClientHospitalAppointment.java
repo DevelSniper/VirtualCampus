@@ -22,6 +22,7 @@ public class ClientHospitalAppointment {
 		Container c = frame.getContentPane();
 		frame.setSize(500,300);
 		JPanel pane = new JPanel();
+		final JOptionPane oPane = new JOptionPane();
 		pane.setLayout(null);
 		c.add(pane);
 		final JLabel label1 = new JLabel("科室:");
@@ -79,7 +80,9 @@ public class ClientHospitalAppointment {
 				String day=cobDay.getSelectedItem().toString();
 				String date=year+'-'+month+'-'+day;
 				try {
-					new ClientHospitalOperateDB().makeAppointment(student.getUserCard(), student.getUserName(), student.getUserSex(), kind, date,"待受理");
+					if(!new ClientHospitalOperateDB().makeAppointment(student.getUserCard(), student.getUserName(), student.getUserSex(), kind, date,"待受理"))
+						oPane.showMessageDialog(null, "您已经预约过了", "提示", JOptionPane.ERROR_MESSAGE);
+						
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
