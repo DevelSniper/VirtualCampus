@@ -1,101 +1,76 @@
 package StuInfoMngApp;
 
-import java.awt.AWTEvent;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.HeadlessException;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Date;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Vector;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 import javax.swing.JTextField;
-/** * @author C5102 * * TODO To change the template for this generated type comment go to * Window - Preferences - Java - Code Style - Code Templates */
 
-public class AddStuInfo extends JFrame{	
-	/**	 * Comment for <code>serialVersionUID</code>	 */	
-	private JPanel contentPanel;	
-	private StuInfoMng sim;
-	private static AddStuInfo window;
-	OperateDB dbConnMng = new OperateDB();
-	
-	String aid;
-	String aname;
-	String aclass;
-	String asex;
-	String abirthday;
-	String abirthplace;
-	String acard;
-	
-	/**	 * @param window	 */	
-	public AddStuInfo(StuInfoMng simIn) {	
-		this.sim = simIn;		
-		setResizable(false);
-		setTitle("添加学生信息");	
-		setBounds(100, 100, 800, 550);
-		enableEvents(AWTEvent.WINDOW_EVENT_MASK);
-		setLocationRelativeTo(getOwner());	
-		setType(Type.POPUP);
+public class AddStuInfo extends JFrame{
+	JPanel jp1 = new JPanel();
+	CreatClass cc = new CreatClass(null);
+	StudentData StudentData = new StudentData(null,null,null,null,null,null,null);
+    OperateDB dbConnMng = new OperateDB();
+    private static AddStuInfo window;
+    
+	public JPanel jpInit()
+	{
+		 
+		jp1.setOpaque(false);		
+	    	
+	    jp1.setLayout(null);
 		
-		final JPanel jp = new JPanel();
-		jp.setOpaque(false);		
-	    getContentPane().add(jp);	
-	    ((JPanel) getContentPane()).setOpaque(false);
-		jp.setLayout(null);
 		
-	    JLabel label = new JLabel();
+		JLabel label = new JLabel();
 	    label.setText("姓名");
-	    label.setBounds(80, 30, 30, 40);
-	    jp.add(label);
+	    label.setBounds(80, 50, 30, 40);
+	    jp1.add(label);
 	    
 	    JLabel label1 = new JLabel();
 	    label1.setText("性别");
-	    label1.setBounds(450, 30, 30, 40);
-	    jp.add(label1);
+	    label1.setBounds(450, 50, 30, 40);
+	    jp1.add(label1);
 	    
 	    JLabel label2 = new JLabel();
 	    label2.setText("学号");
 	    label2.setBounds(80, 150, 30, 40);
-	    jp.add(label2);
+	    jp1.add(label2);
 	    
 	    JLabel label3 = new JLabel();
 	    label3.setText("一卡通号");
 	    label3.setBounds(450, 150, 60, 40);
-	    jp.add(label3);
+	    jp1.add(label3);
 	    
 	    JLabel label4 = new JLabel();
 	    label4.setText("班级");
-	    label4.setBounds(80, 270, 30, 40);
-	    jp.add(label4);
+	    label4.setBounds(80, 250, 30, 40);
+	    jp1.add(label4);
 	    
 	    JLabel label5 = new JLabel();
 	    label5.setText("出生日期");
-	    label5.setBounds(450, 270, 60, 40);
-	    jp.add(label5);
+	    label5.setBounds(450, 250, 60, 40);
+	    jp1.add(label5);
 	    
 	    JLabel label6 = new JLabel();
 	    label6.setText("籍贯");
-	    label6.setBounds(230, 390, 30, 40);
-	    jp.add(label6);
+	    label6.setBounds(230, 350, 30, 40);
+	    jp1.add(label6);
 	    
 	    final JTextField textfield = new JTextField();
-	    textfield.setBounds(150, 30, 150, 40);
+	    textfield.setBounds(150, 50, 150, 40);
 	    textfield.setText("");
 	    textfield.setBackground(new Color(248, 248, 255));
-	    jp.add(textfield);
+	    jp1.add(textfield);
 	    
 	    final JTextField textfield1 = new JTextField();
 	    textfield1.setBounds(150, 150, 150, 40);
@@ -110,7 +85,7 @@ public class AddStuInfo extends JFrame{
 				arg0.consume();		
 			}		
 		});
-	    jp.add(textfield1);
+	    jp1.add(textfield1);
 	    
 	    final JTextField textfield2 = new JTextField();
 	    textfield2.setBounds(520, 150, 150, 40);
@@ -125,57 +100,52 @@ public class AddStuInfo extends JFrame{
 				arg0.consume();		
 			}		
 		});
-	    jp.add(textfield2);
+	    jp1.add(textfield2);
 	    
 	    final JTextField textfield4 = new JTextField();
-	    textfield4.setBounds(520, 270, 150, 40);
+	    textfield4.setBounds(520, 250, 150, 40);
 	    textfield4.setText("");
 	    textfield4.setBackground(new Color(248, 248, 255));
-	   jp.add(textfield4);
+	    jp1.add(textfield4);
 	    
 	    final JTextField textfield5 = new JTextField();
-	    textfield5.setBounds(300, 390, 200, 40);
+	    textfield5.setBounds(300, 350, 200, 40);
 	    textfield5.setText("");
 	    textfield5.setBackground(new Color(248, 248, 255));
-	    jp.add(textfield5);
+	    jp1.add(textfield5);
 	    
 	    final JComboBox combobox = new JComboBox();
 	    combobox.addItem("男");
 	    combobox.addItem("女");
-	    combobox.setBounds(520, 30, 150, 40);
+	    combobox.setBounds(520, 50, 150, 40);
 	    combobox.setBackground(new Color(248, 248, 255));
-	    jp.add(combobox);
+	    jp1.add(combobox);
 	    
 	    final JComboBox combobox1 = new JComboBox();
-	    combobox1.setBounds(150, 270, 150, 40);
+	    combobox1.setBounds(150, 250, 150, 40);
 	    combobox1.setBackground(new Color(248, 248, 255));
-	    jp.add(combobox1);
-		try 
-		{
-			for(int i=0;i<dbConnMng.GetClass().size();i++)
-			{
-				combobox1.addItem(dbConnMng.GetClass().get(i));
-				combobox1.updateUI();
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	    jp1.add(combobox1);
+	    
+	   
+	    
 	    combobox1.addMouseListener(new MouseAdapter() 
 	    {		
 	    	@Override		
 	    	public void mouseClicked(MouseEvent arg0) 
 	    	{
 	    		try {
-					if(dbConnMng.GetClass().size()>combobox1.getItemCount())
-					{
-						combobox1.removeAllItems();
+	    			if(combobox1.getItemCount()<dbConnMng.GetClass().size())
+					    {
+	    				combobox1.removeAllItems();
+					    
 					    for(int i=0;i<dbConnMng.GetClass().size();i++)
 					    {
-							combobox1.addItem(dbConnMng.GetClass().get(i));
-						    combobox1.updateUI();
+							combobox1.addItem(dbConnMng.GetClass().get(i).getaclassid());
+						    
 					    }
-					}
+					    combobox1.updateUI();
+	    		}
+					
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -184,43 +154,45 @@ public class AddStuInfo extends JFrame{
 	    	}	
 		
 	    });
+		
 	    
 	    JButton btnSubmit = new JButton("增加");
 	    btnSubmit.setBorderPainted(true);
-	    btnSubmit.setBounds(250, 480, 80, 30);
-	    jp.add(btnSubmit);
+	    btnSubmit.setBounds(250, 450, 80, 30);
+	    jp1.add(btnSubmit);
 	    btnSubmit.addMouseListener(new MouseAdapter() 
 	    {		
 	    	@Override		
 	    	public void mouseClicked(MouseEvent arg0) 
 	    	{		
-	    		aname = textfield.getText().trim();
-	    		aid = textfield1.getText().trim();
-	    		asex = (String)combobox.getSelectedItem();
-	    		aclass = (String)combobox1.getSelectedItem();
-	    		abirthday = textfield4.getText().trim();
-	    		acard = textfield2.getText().trim();
-	    		abirthplace = textfield5.getText().trim();
+	    		StudentData.setaname(textfield.getText().trim());
+	    		StudentData.setaid(textfield1.getText().trim());
+	    		StudentData.setasex((String)combobox.getSelectedItem());
+	    		StudentData.setaclassid((String)combobox1.getSelectedItem());
+	    		StudentData.setabirthday(textfield4.getText().trim());
+	    		StudentData.setacard(textfield2.getText().trim());
+	    		StudentData.setabirthplace(textfield5.getText().trim());
 	    		
-	    		if(aid.equals(""))
+	    		if(StudentData.getaid().equals(""))
 	    		{
 	    			JOptionPane.showMessageDialog(null,"学号不能为空");
 	    		}
 	    		
-	    		else if(aid.length()!=8)
+	    		else if(StudentData.getaid().length()!=8)
 	    		{
 	    			JOptionPane.showMessageDialog(null,"学号输入错误");
 	    		}
 	    		
-	    		else if(aname.equals(""))
+	    		else if(StudentData.getaname().equals(""))
 	    		{
 	    			JOptionPane.showMessageDialog(null,"姓名不能为空");
 	    		}
 	    		
+	    		
 	    		else
 	    		{	
 	    			try {
-						if(dbConnMng.StuExist(aid)==true)
+						if(dbConnMng.StuExist(StudentData.getaid())==true)
 						{
 							JOptionPane.showMessageDialog(null,"该学生已经存在");
 						}
@@ -228,8 +200,8 @@ public class AddStuInfo extends JFrame{
 						else
 						{
 							try {
-								dbConnMng.AddStuInfo(aname,asex,aid,acard,aclass,abirthday,abirthplace);
-								dispose();
+								dbConnMng.AddStuInfo(StudentData);
+								
 							} catch (SQLException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -250,7 +222,7 @@ public class AddStuInfo extends JFrame{
 	    
 	    JButton btnCreat = new JButton("创建班级");
 	    btnCreat.setBorderPainted(true);
-	    btnCreat.setBounds(310, 275, 100, 30);
+	    btnCreat.setBounds(310, 255, 100, 30);
 	    btnCreat.addMouseListener(new MouseAdapter() 
 	    {		
 	    	@Override		
@@ -261,23 +233,23 @@ public class AddStuInfo extends JFrame{
 	    	}		
 		
 	    });	
-	    jp.add(btnCreat);
+	    jp1.add(btnCreat);
 	    
 	    JButton btnExit = new JButton("退出");
 	    btnExit.setBorderPainted(true);
-	    btnExit.setBounds(470, 480, 80, 30);
-	    jp.add(btnExit);
+	    btnExit.setBounds(470, 450, 80, 30);
+	    jp1.add(btnExit);
 	    btnExit.addMouseListener(new MouseAdapter() 
 	    {		
 	    	@Override		
 	    	public void mouseClicked(MouseEvent e) 
 	    	{	
-	    		dispose(); 			
+	    		System.exit(0); 			
 	    	}		
 		
 	    });
 	    
-	   
+	    return jp1;
 	}
 	
 	

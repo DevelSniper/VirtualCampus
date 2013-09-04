@@ -25,8 +25,8 @@ public class CreatClass extends JFrame{
 	/**	 * Comment for <code>serialVersionUID</code>	 */	
 	private JPanel contentPanel;	
 	private AddStuInfo asi;
+	ClassData ClassData = new ClassData(null,null,null);
 	OperateDB dbConnMng = new OperateDB();
-	String aclass;
 
 	/**	 * @param window	 */	
 	public CreatClass(AddStuInfo asiIn) {	
@@ -64,14 +64,16 @@ public class CreatClass extends JFrame{
 	    	@Override		
 	    	public void mouseClicked(MouseEvent arg0) 
 	    	{		
-	    		aclass = textfield.getText().trim();
+	    		ClassData.setaclassid(textfield.getText().trim());
+	    		ClassData.setamajor("CSE");
+				ClassData.setaclass(ClassData.aclassid.substring(5));
 	    		
-	    		if(aclass.equals(""))
+	    		if(ClassData.getaclassid().equals(""))
 	    		{
 	    			JOptionPane.showMessageDialog(null,"班级不能为空");
 	    		}
 	    		
-	    		else if(aclass.length()!=6)
+	    		else if(ClassData.getaclassid().length()!=6)
 	    		{
 	    			JOptionPane.showMessageDialog(null,"班级输入错误");
 	    		}
@@ -80,7 +82,7 @@ public class CreatClass extends JFrame{
 	    		{
 	    			
 	    			try {
-						if(dbConnMng.ClassExist(aclass)==true)
+						if(dbConnMng.ClassExist(ClassData.getaclassid())==true)
 						{
 							JOptionPane.showMessageDialog(null,"该班级已经存在");
 						}
@@ -88,7 +90,7 @@ public class CreatClass extends JFrame{
 						else
 						{
 							try {
-								dbConnMng.AddClass(aclass);
+								dbConnMng.AddClass(ClassData);
 								dispose();
 								
 
@@ -127,6 +129,9 @@ public class CreatClass extends JFrame{
 	    });
 	    
 	    
+	    
 	}
+	
+	 
 }
 

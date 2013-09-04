@@ -12,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 
 public class  ClientLoginWindow
 {	
@@ -102,10 +103,18 @@ public class  ClientLoginWindow
 	    	{
 	    		//				String loginID = textUserID.getText();
 	    		//				String password = String.valueOf(passwordField.getPassword());
-			MainWindow mw = new MainWindow(window);		
+			MainWindow mw = null;
+			try {
+				mw = new MainWindow(window);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}		
 			StuWindow sw = new StuWindow(window);
 			mw.setVisible(true);
 			sw.setVisible(true);
+			
+			
 			}		
 		});
 	    jp.add(btnLogin);
