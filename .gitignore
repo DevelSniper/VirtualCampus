@@ -4,3 +4,6 @@
 *.prefs
 *.DS_store
 *.db
+ClientHospitalWindow/.gitignore
+
+StudentInformationManager/bin/.gitignore
