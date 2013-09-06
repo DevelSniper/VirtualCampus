@@ -97,25 +97,25 @@ public class ClientLoginWindow {
 				String username = textUserID.getText();
 				String password = String.valueOf(passwordField.getPassword());
 				
-				if (username.isEmpty() || password.isEmpty()){
-					JOptionPane.showMessageDialog(null, "用户名/密码不能为空！", "错误",JOptionPane.ERROR_MESSAGE);			
-				}else{
-					ClientMsgHelper cmh = new ClientMsgHelper();
-					cmh.loginMsg(username, password);
-					cmh.sendMsg();
-					cmh.recieveMsg();
-					User userInMsg = (User) cmh.getDataInMsg();
-					if (userInMsg == null){
-						JOptionPane.showMessageDialog(null, "用户名/密码错误！", "错误",JOptionPane.ERROR_MESSAGE);
-					} else {
-						ClientMenuWindow cmw = new ClientMenuWindow(window, userInMsg);
-						cmw.setVisible(true);
-					}
-					cmh.disconnect();
-//					User user = new User("213110561", "123456", "student");
-//					ClientMenuWindow cmw = new ClientMenuWindow(window, user);
-//					cmw.setVisible(true);
-				}			
+//				if (username.isEmpty() || password.isEmpty()){
+//					JOptionPane.showMessageDialog(null, "用户名/密码不能为空！", "错误",JOptionPane.ERROR_MESSAGE);			
+//				}else{
+//					ClientMsgHelper cmh = new ClientMsgHelper();
+//					cmh.loginMsg(username, password);
+//					cmh.sendMsg();
+//					cmh.recieveMsg();
+//					User userInMsg = (User) cmh.getDataInMsg();
+//					if (userInMsg == null){
+//						JOptionPane.showMessageDialog(null, "用户名/密码错误！", "错误",JOptionPane.ERROR_MESSAGE);
+//					} else {
+//						ClientMenuWindow cmw = new ClientMenuWindow(window, userInMsg);
+//						cmw.setVisible(true);
+//					}
+//					cmh.disconnect();
+					User user = new User("213110561", "123456", "student");
+					ClientMenuWindow cmw = new ClientMenuWindow(window, user);
+					cmw.setVisible(true);
+//				}			
 			}
 		});
 		jp.add(btnLogin);

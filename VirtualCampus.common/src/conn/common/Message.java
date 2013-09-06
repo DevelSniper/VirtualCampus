@@ -1,6 +1,7 @@
 package conn.common;
 
 import java.io.Serializable;
+import java.util.Vector;
 
 /**
  * 消息类
@@ -18,12 +19,19 @@ public class Message implements Serializable {
 	protected String cdData;
 	protected String cgColum;
 	protected String cgData;
-
+	protected String sql;
+	
 	protected String username;
 	protected String password;
 	protected String role;
 	protected Object data;
 	protected boolean isSuccess;
+	protected boolean statues;
+	
+	protected String[] cgColumArray;
+	protected String[] cgDataArray;
+	
+	protected int colum = 0;
 	public String getType() {
 		return type;
 	}
@@ -102,6 +110,35 @@ public class Message implements Serializable {
 	public void setSuccess(boolean isSuccess) {
 		this.isSuccess = isSuccess;
 	}
-	
+	public boolean getStatues() {
+		return statues;
+	}
+	public void setStatues(boolean statues) {
+		this.statues = statues;
+	}
+	public String[] getCgColumArray() {
+		return cgColumArray;
+	}
+	public void setCgColumArray(String[] cgColumArray) {
+		this.cgColumArray = cgColumArray;
+	}
+	public String[] getCgDataArray() {
+		return cgDataArray;
+	}
+	public void setCgDataArray(String[] cgDataArray) {
+		this.cgDataArray = cgDataArray;
+	}
 
+	public String getSql() {
+		return sql;
+	}
+	public void setSql(String sql) {
+		this.sql = sql;
+	}
+	public int getColum() {
+		return colum;
+	}
+	public void setColum(int colum) {
+		this.colum = colum;
+	}
 }
