@@ -3,7 +3,6 @@ package server.connDb;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.sql.ResultSet;
 import java.util.Vector;
 
 import server.util.ServerSrvThreadMgr;
@@ -63,20 +62,10 @@ public class ServerThread extends Thread {
 					ServerSrvThreadMgr.remove(clientID);
 				}else if (type.equals(MessageType.C_REQ_CREATE)){
 					ServerThread sth = ServerSrvThreadMgr.get(clientID);
-					String[] cgColumArray = msg.getCgColumArray();
-					String[] cgDataArray = msg.getCgDataArray();
-					String table = msg.getTable();
-					String cgColum = "";
-					String cgData = "";
-					for (int i=0; i<cgColumArray.length; i++){
-						cgColum += cgColumArray[i];
-						cgData += "'" + cgDataArray[i] + "'";
-						if (i!= cgColumArray.length-1){
-							cgColum += ",";
-							cgData += ",";
-						}	
-					}
-					boolean createStatus = opdb.create(table, cgColum, cgData);
+					int username = Integer.parseInt(msg.getUsername());
+					String password = (String) msg.getPassword();
+					String role = (String) msg.getRole();
+					boolean createStatus = opdb.createUser(username, password, role);
 					Message msgRsp = new Message();
 					msgRsp.setType(MessageType.S_RET_STATUS);
 					if(createStatus){
@@ -90,9 +79,18 @@ public class ServerThread extends Thread {
 					oos.flush();
 					ServerSrvThreadMgr.remove(clientID);
 				
-				}
+				}else if(type.equals(MessageType.C_REQ_QUERYUSER)){
+					ServerThread sth = ServerSrvThreadMgr.get(clientID);
+					Vector<User> users = opdb.queryUser();
+					Message msgRsp = new Message();
+					msgRsp.setType(MessageType.S_RET_DATA);
+					msgRsp.setData(users);
+					ObjectOutputStream oos = new ObjectOutputStream(sth.getClient().getOutputStream());
+					oos.writeObject(msgRsp);
+					oos.flush();
+					ServerSrvThreadMgr.remove(clientID);
 				
-				else if(type.equals(MessageType.C_REQ_UPDATE)){
+				}else if(type.equals(MessageType.C_REQ_UPDATE)){
 					ServerThread sth = ServerSrvThreadMgr.get(clientID);
 					String table = msg.getTable();
 					String cdColum = msg.getCdColum();
@@ -112,109 +110,7 @@ public class ServerThread extends Thread {
 					oos.writeObject(msgRsp);
 					oos.flush();
 					ServerSrvThreadMgr.remove(clientID);
-				}
-				
-				else if (type.equals(MessageType.C_REQ_STATUS)){
-					ServerThread sth = ServerSrvThreadMgr.get(clientID);
-					String table = msg.getTable();
-					String cdColum = msg.getCdColum();
-					String cdData = msg.getCdData();
-					boolean status = opdb.isExist(table, cdColum, cdData);
-					Message msgRsp = new Message();
-					msgRsp.setType(MessageType.S_RET_STATUS);
-					if(status){
-						msgRsp.setStatues(true);
-					}else{
-						msgRsp.setStatues(false);
-					}
-					
-					ObjectOutputStream oos = new ObjectOutputStream(sth.getClient().getOutputStream());
-					oos.writeObject(msgRsp);
-					oos.flush();
-					ServerSrvThreadMgr.remove(clientID);
-				}
-				else if (type.equals(MessageType.C_REQ_QUERY)){
-					ServerThread sth = ServerSrvThreadMgr.get(clientID);
-					String table = msg.getTable();
-					String[] columArray = msg.getCgColumArray();
-					String cdColum = msg.getCdColum();
-					String cdData = msg.getCdData();
-					String sql = msg.getSql();
-					int colum = msg.getColum();
-					Vector<Vector<String>> result = new Vector<Vector<String>>();
-					if (sql != null){
-						result = opdb.query(table, sql, columArray);
-					}
-					else if (cdColum != null){
-						result = opdb.query(table,cdColum, cdData, columArray);
-					}else{
-						result = opdb.query(table, columArray);
-					}
-					Message msgRsp = new Message();
-					msgRsp.setType(MessageType.S_RET_DATA);
-					msgRsp.setData(result);
-					ObjectOutputStream oos = new ObjectOutputStream(sth.getClient().getOutputStream());
-					oos.writeObject(msgRsp);
-					oos.flush();
-					ServerSrvThreadMgr.remove(clientID);
-				}
-				else if (type.equals(MessageType.C_REQ_DELETE)){
-					ServerThread sth = ServerSrvThreadMgr.get(clientID);
-					String table = msg.getTable();
-					String colum = msg.getCgColum();
-					String data = msg.getCgData();
-					opdb.delete(table, colum, data);
-				}
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				else if (type.equals(MessageType.C_REQ_CREATE_USER)){
-					ServerThread sth = ServerSrvThreadMgr.get(clientID);
-					int username = Integer.parseInt(msg.getUsername());
-					String password = (String) msg.getPassword();
-					String role = (String) msg.getRole();
-					boolean createStatus = opdb.createUser(username, password, role);
-					Message msgRsp = new Message();
-					msgRsp.setType(MessageType.S_RET_STATUS);
-					if(createStatus){
-						msgRsp.setSuccess(true);
-					}else {
-						msgRsp.setSuccess(false);
-					}
-					
-					ObjectOutputStream oos = new ObjectOutputStream(sth.getClient().getOutputStream());
-					oos.writeObject(msgRsp);
-					oos.flush();
-					ServerSrvThreadMgr.remove(clientID);
-				
-				}
-				else if(type.equals(MessageType.C_REQ_QUERYUSER)){
-					ServerThread sth = ServerSrvThreadMgr.get(clientID);
-					Vector<User> users = opdb.queryUser();
-					Message msgRsp = new Message();
-					msgRsp.setType(MessageType.S_RET_DATA);
-					msgRsp.setData(users);
-					ObjectOutputStream oos = new ObjectOutputStream(sth.getClient().getOutputStream());
-					oos.writeObject(msgRsp);
-					oos.flush();
-					ServerSrvThreadMgr.remove(clientID);
-				
-				}
-				else if (type.equals(MessageType.C_REQ_QUERYSTU)){
+				}else if (type.equals(MessageType.C_REQ_QUERYSTU)){
 					ServerThread sth = ServerSrvThreadMgr.get(clientID);
 					int username = Integer.parseInt(msg.getUsername());
 					Student stu  = opdb.queryStudent(username);

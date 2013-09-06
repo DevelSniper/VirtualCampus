@@ -56,16 +56,18 @@ public class OperateDB {
 		return false;
 	}
 
-	
-	public boolean create(String table, String cgColum, String cgData) throws SQLException {
-		String sql;
-		try{
-  			Class.forName(DRIVER_NAME);
-  			conn = DriverManager.getConnection(CONN_URL, USER_NAME, PASSWORD);
-  			
-  			sql = String.format("INSERT INTO %s (%s) VALUES (%s)", table, cgColum, cgData);
-  			Statement stmt = conn.createStatement(); 
-  			stmt.executeUpdate(sql);
+	public boolean createUser(int username, String pwd, String role) throws SQLException {
+		String sqlCreateUser;
+		int uID = username;
+		String uPwd = pwd;
+		String uRole = role;
+		try {
+			Class.forName(DRIVER_NAME);
+			conn = DriverManager.getConnection(CONN_URL, USER_NAME, PASSWORD);
+			
+			Statement stmt = conn.createStatement();
+			sqlCreateUser = String.format("INSERT INTO `vcUser` (`uID`, `uPwd`, `uRole`) VALUES ('%s', '%s', '%s')", uID, uPwd, uRole);
+			stmt.executeUpdate(sqlCreateUser);
 			return true;
 			
 		}catch (SQLException e){
@@ -78,31 +80,33 @@ public class OperateDB {
 			conn.close();
 		}
 	}
-	public boolean isExist(String table, String cdColum, String cdData) throws SQLException {
+
+	public Vector<User> queryUser() throws SQLException {
+		Vector<User> users = new Vector<User>();
+		String sqlQueryUser;
 		
-		String sql;
-		boolean status=false;
-		try{
-  			Class.forName(DRIVER_NAME);
-  			conn = DriverManager.getConnection(CONN_URL, USER_NAME, PASSWORD);
-  			
-  			sql = String.format("SELECT * FROM %s WHERE %s ='%s'", table, cdColum, cdData);
-  			Statement stmt = conn.createStatement(); 
-  			stmt.executeQuery(sql);
-            ResultSet rs = stmt.executeQuery(sql);
-              
-            if (rs.first())     
-    		{            
-            	status = true;                    
-    		}            	       	
-  				
-  		} catch (Exception e){
-  			e.printStackTrace();
-  		} finally {
-  			conn.close();
-  		}
-		return status;
+		try {
+			Class.forName(DRIVER_NAME);
+			conn = DriverManager.getConnection(CONN_URL, USER_NAME, PASSWORD);
+			
+			Statement stmt = conn.createStatement();
+			sqlQueryUser = "SELECT * FROM vcUser"; 
+			ResultSet rsQueryUser = stmt.executeQuery(sqlQueryUser);
+			
+			while(rsQueryUser.next()){
+				users.add(new User(rsQueryUser.getString("uID"), rsQueryUser.getString("uPwd"), rsQueryUser.getString("uRole")));
+			}
+			
+		} catch (Exception e){
+			e.printStackTrace();
+		} finally {
+			conn.close();
+		}	
+		
+		return users;
 	}
+
+
 	public boolean update(String table, String cdColum, String cdData,
 			String cgColum, String cgData) throws SQLException {
 		String sqlQuery;
@@ -130,148 +134,6 @@ public class OperateDB {
 		} finally {
 			conn.close();
 		}
-	}
-	public Vector<Vector<String>> query(String table, String sql, String[] colum) throws SQLException {
-		Vector<Vector<String>> result = new Vector<Vector<String>>();
-		try {
-			Class.forName(DRIVER_NAME);
-			conn = DriverManager.getConnection(CONN_URL, USER_NAME, PASSWORD);
-			
-			Statement stmt = conn.createStatement();
-			sql = String.format("SELECT * FROM %s WHERE 1=1 %s", table, sql); 
-			ResultSet rsQuery = stmt.executeQuery(sql);
-			
-			while(rsQuery.next()){
-				Vector<String> temp = new Vector<String>();
-				for (int i=0; i<colum.length; i++)
-					temp.add(rsQuery.getString(colum[i]));
-				result.add(temp);
-			}
-			
-		} catch (Exception e){
-			e.printStackTrace();
-		} finally {
-			conn.close();
-		}	
-		return result;
-	}
-
-	
-	public Vector<Vector<String>> query(String table, String[] colum) throws SQLException {
-		Vector<Vector<String>> result = new Vector<Vector<String>>();
-		String sql;
-		try {
-			Class.forName(DRIVER_NAME);
-			conn = DriverManager.getConnection(CONN_URL, USER_NAME, PASSWORD);
-			
-			Statement stmt = conn.createStatement();
-			sql = String.format("SELECT * FROM %s", table); 
-			ResultSet rsQuery = stmt.executeQuery(sql);
-			
-			while(rsQuery.next()){
-				Vector<String> temp = new Vector<String>();
-				for (int i=0; i<colum.length; i++)
-					temp.add(rsQuery.getString(colum[i]));
-				result.add(temp);
-			}
-			
-		} catch (Exception e){
-			e.printStackTrace();
-		} finally {
-			conn.close();
-		}	
-		return result;
-	}
-	
-	
-	public Vector<Vector<String>> query(String table, String cdColum,
-			String cdData, String[] colum) throws SQLException {
-		Vector<Vector<String>> result = new Vector<Vector<String>>();
-		String sql;
-		try {
-			Class.forName(DRIVER_NAME);
-			conn = DriverManager.getConnection(CONN_URL, USER_NAME, PASSWORD);
-			
-			Statement stmt = conn.createStatement();
-			sql = String.format("SELECT * FROM %s WHERE %s='%s'", table, cdColum, cdData); 
-			ResultSet rsQuery = stmt.executeQuery(sql);
-			
-			while(rsQuery.next()){
-				Vector<String> temp = new Vector<String>();
-				for (int i=0; i<colum.length; i++)
-					temp.add(rsQuery.getString(colum[i]));
-				result.add(temp);
-			}
-			
-		} catch (Exception e){
-			e.printStackTrace();
-		} finally {
-			conn.close();
-		}	
-		return result;
-	}
-	public void delete(String table, String colum, String data) throws SQLException {
-		String sql;
-		try{
-			Class.forName(DRIVER_NAME);
-			conn = DriverManager.getConnection(CONN_URL, USER_NAME, PASSWORD);
-			
-			Statement stmt = conn.createStatement();
-			
-			sql = String.format("DELETE FROM %s WHERE %s='%s'", table, colum, data);
-			stmt.executeUpdate(sql);	
-			
-		} catch (Exception e){
-			e.printStackTrace();
-		} finally {
-			conn.close();
-		}
-	}
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public Vector<User> queryUser() throws SQLException {
-		Vector<User> users = new Vector<User>();
-		String sqlQueryUser;
-		
-		try {
-			Class.forName(DRIVER_NAME);
-			conn = DriverManager.getConnection(CONN_URL, USER_NAME, PASSWORD);
-			
-			Statement stmt = conn.createStatement();
-			sqlQueryUser = "SELECT * FROM vcUser"; 
-			ResultSet rsQueryUser = stmt.executeQuery(sqlQueryUser);
-			
-			while(rsQueryUser.next()){
-				users.add(new User(rsQueryUser.getString("uID"), rsQueryUser.getString("uPwd"), rsQueryUser.getString("uRole")));
-			}
-			
-		} catch (Exception e){
-			e.printStackTrace();
-		} finally {
-			conn.close();
-		}	
-		
-		return users;
 	}
 
 	public Student queryStudent(int username) throws SQLException {
@@ -306,36 +168,5 @@ public class OperateDB {
 		return stu;
 	}
 
-
-
 	
-	
-	
-
-	public boolean createUser(int username, String pwd, String role) throws SQLException {
-		String sqlCreateUser;
-		int uID = username;
-		String uPwd = pwd;
-		String uRole = role;
-		try {
-			Class.forName(DRIVER_NAME);
-			conn = DriverManager.getConnection(CONN_URL, USER_NAME, PASSWORD);
-			
-			Statement stmt = conn.createStatement();
-			sqlCreateUser = String.format("INSERT INTO `vcUser` (`uID`, `uPwd`, `uRole`) VALUES ('%s', '%s', '%s')", uID, uPwd, uRole);
-			stmt.executeUpdate(sqlCreateUser);
-			return true;
-			
-		}catch (SQLException e){
-			e.printStackTrace();
-			return false;
-		} catch (Exception e){
-			e.printStackTrace();
-			return false;
-		} finally {
-			conn.close();
-		}
-	}
-
-
 }

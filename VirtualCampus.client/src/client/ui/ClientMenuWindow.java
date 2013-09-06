@@ -22,7 +22,6 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
 import client.connDb.ClientMsgHelper;
-import client.ui.studentInfor.ClientStudentInforWindow;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -71,19 +70,6 @@ public class ClientMenuWindow extends JFrame{
 		lbUserRole.setVisible(true);
 		jp.add(lbUserRole);
 		
-		
-		JButton btnStudentInfor = new JButton("Student Infor");
-		btnStudentInfor.setBorderPainted(true);
-		btnStudentInfor.setBounds(50, 50, 100, 100);
-		btnStudentInfor.addMouseListener(new MouseAdapter(){
-			@Override
-			public void mouseClicked(MouseEvent arg0){
-				ClientStudentInforWindow csiw = new ClientStudentInforWindow();
-				csiw.setVisible(true);
-			}
-			
-		});
-		jp.add(btnStudentInfor);
 		
 		//Menu
 		
