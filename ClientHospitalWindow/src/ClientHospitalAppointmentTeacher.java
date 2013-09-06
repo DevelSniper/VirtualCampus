@@ -37,7 +37,7 @@ public class ClientHospitalAppointmentTeacher {
 		data1OfTable.addElement("sdsdsd");
 		data1OfTable.addElement("sdsdsd");
 		//建立一个vector用于存放tbAppointment的数据	
-		JFrame frame=new JFrame("看病预约-医生");
+		final JFrame frame=new JFrame("看病预约-医生");
 		
 		Container c = frame.getContentPane();
 		frame.setSize(500,300);
@@ -102,6 +102,12 @@ public class ClientHospitalAppointmentTeacher {
 				}	
 			}
 		});
+		//关闭按钮监听
+			btClose.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e){
+					frame.dispose();
+				}
+				});
 		
 		
 		

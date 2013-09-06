@@ -18,7 +18,8 @@ public class ClientHospitalAppointment {
 	private JComboBox cobMonth= new JComboBox(monthOfAppointment);
 	private JComboBox cobDay= new JComboBox(dayOfAppointment31);
 	public ClientHospitalAppointment(final Student student){
-		JFrame frame=new JFrame("看病预约");
+		
+		final JFrame frame=new JFrame("看病预约");
 		Container c = frame.getContentPane();
 		frame.setSize(500,300);
 		JPanel pane = new JPanel();
@@ -27,6 +28,7 @@ public class ClientHospitalAppointment {
 		c.add(pane);
 		final JLabel label1 = new JLabel("科室:");
 		final JLabel label2 = new JLabel("时间:");
+		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		
 		JButton btnMakeApt = new JButton("确认预约");
 		JButton btnCancel = new JButton("取消");
@@ -70,7 +72,7 @@ public class ClientHospitalAppointment {
 		
 		
 		
-		
+		//预约按钮的监听
 		btnMakeApt.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				//获取ComboBox的内容并传入数据库
@@ -89,6 +91,14 @@ public class ClientHospitalAppointment {
 				}
 			}
 		});
+		
+		//关闭按钮监听
+		btnCancel.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				frame.dispose();
+			}
+		});
+		
 		
 
 	

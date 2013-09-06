@@ -27,12 +27,13 @@ public class ClientHospitalWindow {
 	//	System.out.println(student.getUserHometown());
 		//新建一个Student测试对象student
 		
-		final User testUserT = new User("213111455", "1", "teacher");
-		final User testUserS = new User("213112403","1","student");
+		final User testUserT = new User("213111455", "1", "teacher");//teacher老师User
+		final User testUserS = new User("213112403","1","student");//student学生User
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					window = new ClientHospitalWindow(testUserT);//传入student或teacher类型的User
+					window = new ClientHospitalWindow(testUserT);//传入teacher类型的User
+					//window = new ClientHospitalWindow(testUserS);//传入student类型的User
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -143,11 +144,19 @@ public class ClientHospitalWindow {
 				new ClientHospitalPatientCreate();
 			}
 		});
-				frame.addWindowListener(new WindowAdapter(){
-					public void windowClosing(WindowEvent e){
-						System.exit(0);
-					}
-				});
+		//关闭按钮监听
+		btnClose.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				System.exit(0);
+			}
+		});
+		//frame右上角叉叉监听
+		frame.addWindowListener(new WindowAdapter(){
+			public void windowClosing(WindowEvent e){
+				System.exit(0);
+			}
+		});
+			
 		
 		
 		//frame.setLocationRelativeTo(null);

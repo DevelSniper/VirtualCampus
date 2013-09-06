@@ -15,7 +15,7 @@ public class ClientHospitalMessageTeacher {
 		final Vector dataOfTable = new Vector();
 		headOfTable.addElement("留言人");
 		headOfTable.addElement("留言内容");
-		JFrame frame=new JFrame("在线留言");
+		final JFrame frame=new JFrame("在线留言");
 		Container c = frame.getContentPane();
 		frame.setSize(500,300);
 		JPanel pane = new JPanel();
@@ -39,6 +39,7 @@ public class ClientHospitalMessageTeacher {
 		final JTextArea taMessage = new JTextArea("输入内容");
 		JButton btMessage = new JButton("提交留言");
 		JButton btDeleteMessage = new JButton("删除留言");
+		JButton btClose = new JButton("关闭");
 		taMessage.setLineWrap(true);//textarea自动换行
 		//监听器们
 		//JTree的选中监听器
@@ -67,6 +68,12 @@ public class ClientHospitalMessageTeacher {
 				updateDataOfTable(selName,dataOfTable,tbMessage);//更新message table
 			}
 		});
+		//关闭按钮监听
+		btClose.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				frame.dispose();
+			}
+		});
 		
 		//布局
 		//tbMessage.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -81,16 +88,18 @@ public class ClientHospitalMessageTeacher {
 		tbMessage.setPreferredScrollableViewportSize(new Dimension(100,100));
 		taMessage.setBorder(new LineBorder(new java.awt.Color(127,157,185), 1, false));//设置留言框边框
 		spMessage.setBounds(160, 10,260, 240);
-		taMessage.setBounds(430,10,200,180);
-		btMessage.setBounds(470,210,112,40);
+		taMessage.setBounds(430,10,230,190);
+		btMessage.setBounds(430,210,112,40);
+		btClose.setBounds(550,210,112,40);
 		//btDeleteMessage.setBounds(550, 210, 112, 40);
 		scrollPane.setBounds(10, 10, 140, 240);
 		pane.add(spMessage);
 		pane.add(taMessage);
 		pane.add(btMessage);
+		pane.add(btClose);
 		//pane.add(btDeleteMessage);
 		c.add(pane);
-		frame.setSize(660,300);
+		frame.setSize(690,300);
 		//frame.setSize(690,300);
 		frame.setVisible(true);
 	}
